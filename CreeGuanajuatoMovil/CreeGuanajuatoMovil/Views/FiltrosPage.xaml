@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls"
+             x:Class="CreeGuanajuatoMovil.Views.FiltrosPage">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20" Orientation="Vertical">
+                <StackLayout>
+                    <Entry Placeholder="Ingrese su nombre" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Seleccione su estado" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Seleccione su municipio" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Seleccione su colonia" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese su escolaridad" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese sus necesidades" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese su estado civil" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Text="Guardar usuario" FontSize="15" Command="{Binding IniciaSesionQR}"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

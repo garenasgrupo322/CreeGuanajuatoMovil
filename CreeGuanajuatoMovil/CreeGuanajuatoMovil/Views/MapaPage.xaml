@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
+             x:Class="CreeGuanajuatoMovil.Views.MapaPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Name="MenuItem1" Order="Primary" Icon="Microsoft.png" Text="Item 1" Priority="0" />
+        <ToolbarItem Name="MenuItem2" Order="Primary" Icon="Xamarin.png" Text="Item 2" Priority="1" />
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="* " />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <StackLayout Grid.Row="0" Grid.RowSpan="4">
+                <maps:Map x:Name="map" VerticalOptions="FillAndExpand"/>
+            </StackLayout>
+
+            <ActivityIndicator x:Name="acIndicator" Grid.Row="0" HeightRequest="200" Grid.RowSpan="4" IsRunning="false" Color="LightGray" IsVisible="False"/>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

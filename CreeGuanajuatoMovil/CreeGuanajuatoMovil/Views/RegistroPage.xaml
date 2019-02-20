@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls"
+             x:Class="CreeGuanajuatoMovil.Views.RegistroPage"
+             Title="Nuevo Registro">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Margin="20" Orientation="Vertical">
+                <StackLayout>
+                    <Entry Placeholder="Ingrese su nombre" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Apellido paterno" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorPaternoMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorPaternoVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Apellido materno" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorMaternoMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorMaternoVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Ingrese su estado" HorizontalTextAlignment="Start" Text="{Binding sEstado, Mode=TwoWay}"/>
+                    <ListView ItemsSource="{Binding Estados}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding nombre_estado}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    
+                    <!--<xfx:XfxComboBox Placeholder="Seleccione su estado" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>-->
+                    <!--<Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>-->
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Seleccione su municipio" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Seleccione su colonia" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese su calle" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Ingrese su número" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Ingrese su edad" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+                
+                <StackLayout>
+                    <Entry Placeholder="Ingrese número de hijos" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese su escolaridad" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese sus necesidades" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <xfx:XfxComboBox Placeholder="Ingrese su estado civil" Text="{Binding EmailAddress}"
+                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Entry Placeholder="Ingrese INE/IFE" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Text="Guardar usuario" FontSize="15" Command="{Binding IniciaSesionQR}"/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

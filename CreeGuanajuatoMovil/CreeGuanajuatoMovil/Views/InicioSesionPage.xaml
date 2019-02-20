@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CreeGuanajuatoMovil.Views.InicioSesionPage"
+             NavigationPage.HasNavigationBar="false">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackLayout Orientation="Vertical" Margin="30" Grid.Row="0">
+                            <StackLayout>
+                                <Image Source="{Binding imageSorceLogo}" Aspect="AspectFit" Margin="10" HeightRequest="150" WidthRequest="150"  VerticalOptions="Center" HorizontalOptions="Center"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical">
+                                <Entry Text="{Binding oUser.email, Mode=TwoWay}" x:Name="EmailEntry" 
+                                       TextColor="Gray" Placeholder="Ingrese su usuario" PlaceholderColor="Gray" 
+                                       Keyboard="Email" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White"/>
+                                <Label Text="{Binding ErrorUsuarioMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorUsuarioVisible, Mode=OneWay}"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Entry Text="{Binding oUser.password, Mode=TwoWay}" x:Name="PasswordEntry" 
+                                       TextColor="Gray" Placeholder="Ingrese su contraseña" PlaceholderColor="Gray" 
+                                       IsPassword="True" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White"/>
+                                <Label Text="{Binding ErrorContraMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorContraVisible, Mode=OneWay}"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Label Text="{Binding Message, Mode=OneWay}" TextColor="Gold"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Button Text="Iniciar sesión" FontSize="18" Command="{Binding IniciaSesion}"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Button Text="¿Olvidaste tu Contraseña?" FontSize="15" BackgroundColor="Transparent"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="Start">
+                                    <Image Source="{Binding iconQR}" HeightRequest="30" WidthRequest="30"/>
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="Start">
+                                    <Button Text="Escanear QR" FontSize="15" BackgroundColor="Transparent" Command="{Binding IniciaSesionQR}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </StackLayout>
+                        <ActivityIndicator Color="#2E64FE" IsRunning="{Binding IsBusy }" Grid.Row="0" HeightRequest="200"/>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>
