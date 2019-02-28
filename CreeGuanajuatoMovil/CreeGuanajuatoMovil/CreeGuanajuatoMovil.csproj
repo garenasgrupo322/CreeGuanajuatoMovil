@@ -12,11 +12,15 @@
   <ItemGroup>
     <None Remove="Images\code_qr.png" />
     <None Remove="Images\profile.png" />
+    <None Remove="Images\pin.png" />
+    <None Remove="Images\logo_color.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\code_qr.png" />
     <EmbeddedResource Include="Images\profile.png" />
+    <EmbeddedResource Include="Images\pin.png" />
+    <EmbeddedResource Include="Images\logo_color.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +35,8 @@
     <PackageReference Include="Xfx.Controls" Version="1.1.3" />
     <PackageReference Include="ZXing.Net.Mobile" Version="2.4.1" />
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
+    <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,5 +61,10 @@
     <EmbeddedResource Update="Views\ReportePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android">
+      <HintPath>..\..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.1.8-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

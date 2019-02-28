@@ -179,11 +179,17 @@
     <PackageReference Include="ZXing.Net.Mobile.Forms">
       <Version>2.4.1</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Geolocator">
+      <Version>4.5.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.Permissions">
+      <Version>3.0.0.12</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\CreeGuanajuatoMovil\CreeGuanajuatoMovil.csproj">
-      <Project>{C22A0066-60B8-4AAE-A204-85A503DC2678}</Project>
+      <Project>{52461B7F-524A-4955-A69F-85F1B352B2B9}</Project>
       <Name>CreeGuanajuatoMovil</Name>
     </ProjectReference>
   </ItemGroup>

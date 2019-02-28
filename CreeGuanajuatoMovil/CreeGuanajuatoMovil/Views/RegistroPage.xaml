@@ -1,102 +1,182 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls"
-             x:Class="CreeGuanajuatoMovil.Views.RegistroPage"
-             Title="Nuevo Registro">
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:xfx="clr-namespace:Xfx;assembly=Xfx.Controls" 
+             xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize" x:Class="CreeGuanajuatoMovil.Views.RegistroPage" 
+             x:Name="CrearRegistro" Title="NUEVO REGISTRO">
+    <ContentPage.ToolbarItems>
+        <iconize:IconToolbarItem Order="Primary" Icon="profile.png">
+        </iconize:IconToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Margin="20" Orientation="Vertical">
-                <StackLayout>
-                    <Entry Placeholder="Ingrese su nombre" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Apellido paterno" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorPaternoMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorPaternoVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Apellido materno" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorMaternoMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorMaternoVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Ingrese su estado" HorizontalTextAlignment="Start" Text="{Binding sEstado, Mode=TwoWay}"/>
-                    <ListView ItemsSource="{Binding Estados}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <TextCell Text="{Binding nombre_estado}"/>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    
-                    <!--<xfx:XfxComboBox Placeholder="Seleccione su estado" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>-->
-                    <!--<Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>-->
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Seleccione su municipio" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Seleccione su colonia" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Ingrese su calle" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Ingrese su número" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Ingrese su edad" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-                
-                <StackLayout>
-                    <Entry Placeholder="Ingrese número de hijos" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Ingrese su escolaridad" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Ingrese sus necesidades" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <xfx:XfxComboBox Placeholder="Ingrese su estado civil" Text="{Binding EmailAddress}"
-                         ItemsSource="{Binding EmailSuggestions}" SortingAlgorithm="{Binding SortingAlgorithm}"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Entry Placeholder="Ingrese INE/IFE" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}"/>
-                </StackLayout>
-
-                <StackLayout>
-                    <Button Text="Guardar usuario" FontSize="15" Command="{Binding IniciaSesionQR}"/>
-                </StackLayout>
-
+        <ScrollView BackgroundColor="#E6E6E6">
+            <StackLayout>
+                <BoxView Color="Gray" CornerRadius="10" HorizontalOptions="FillAndExpand" HeightRequest="1"/>
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <ActivityIndicator Color="#2E64FE" IsRunning="{Binding IsBusy }" Grid.Row="0" Grid.RowSpan="15" />
+                    <StackLayout Grid.Row="0" Orientation="Vertical">
+                        <StackLayout Orientation="Horizontal">
+                            <StackLayout>
+                                <Label Text="Seleccione etapa" FontSize="Large"/>
+                            </StackLayout>
+                            <StackLayout>
+                                <Label Text="{Binding sEtapa}" FontSize="Large"/>
+                            </StackLayout>
+                        </StackLayout>
+                        <Slider Maximum="3" Value="{Binding Etapa}" />
+                    </StackLayout>
+                    <StackLayout x:Name="Usuario"  Grid.Row="1" Orientation="Vertical" IsVisible="{Binding PanelUsuario}">
+                        <StackLayout>
+                            <Entry x:Name="Nombre" Placeholder="Ingrese su nombre" HorizontalTextAlignment="Start" Text="{Binding registro.nombre}" Keyboard="Text" 
+                                   ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference ApellidoPaterno}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorNombreMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNombreVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="ApellidoPaterno" Placeholder="Apellido paterno" HorizontalTextAlignment="Start" Text="{Binding registro.apellido_paterno}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference ApellidoMaterno}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorPaternoMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorPaternoVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="ApellidoMaterno" Placeholder="Apellido materno" HorizontalTextAlignment="Start" Text="{Binding registro.apellido_materno}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Estado}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorMaternoMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorMaternoVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <DatePicker x:Name="Nacimiento" Date="{Binding registro.fecha_nacimiento, Mode=OneWayToSource}" />
+                            <Label Text="{Binding ErrorNacimientoMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNacimientoVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry Placeholder="Ingrese email" HorizontalTextAlignment="Start" Text="{Binding registro.email}" Keyboard="Email" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorEmailMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEmailVisible, Mode=OneWay}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout x:Name="Direccion" Grid.Row="2" Orientation="Vertical" IsVisible="{Binding PanelDireccion}">
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Entry x:Name="Estado" Placeholder="Ingrese su estado" HorizontalTextAlignment="Start" Text="{Binding sEstado, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Municipio}" Focused="Handle_FocusedEstado" Unfocused="Handle_Unfocused" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="End">
+                                    <Image Source="{Binding imageSorceLocation}" Margin="10" VerticalOptions="Center" HorizontalOptions="End">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding GetCurrentLocation}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </StackLayout>
+                            <Label Text="{Binding ErrorEstadoMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEstadoVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Municipio" Placeholder="Ingrese su municipio" HorizontalTextAlignment="Start" Text="{Binding sMunicipio, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Colonia}" Focused="Handle_FocusedMunicipio" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorMunicipioMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorMunicipioVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleEstado}">
+                            <ListView ItemsSource="{Binding Estados}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EstadoSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre_estado}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Colonia" Placeholder="Ingrese su colonia" HorizontalTextAlignment="Start" Text="{Binding sColonia, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Calle}" Focused="Handle_FocusedColonia" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorColoniaMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorColoniaVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout Grid.Row="5" IsVisible="{Binding IsVisibleMunicipio}">
+                            <ListView ItemsSource="{Binding Municipios}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding MunicipioSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre_municipio}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Calle" Placeholder="Ingrese su calle" HorizontalTextAlignment="Start" Text="{Binding sDireccion, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Numero}" Focused="Handle_FocusedCalle" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorCalleMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorCalleVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleColonia}">
+                            <ListView ItemsSource="{Binding Colonias}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding ColoniaSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre_colonia}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Numero" Placeholder="Ingrese su número" HorizontalTextAlignment="Start" Text="{Binding DireccionSeleccionado.numero, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference CP}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorNumeroMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNumeroVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleDireccion}">
+                            <ListView ItemsSource="{Binding Direcciones}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding DireccionSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding calle}" Detail="{Binding numero}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="CP" Placeholder="Ingrese su CP" HorizontalTextAlignment="Start" Text="{Binding ColoniaSeleccionado.codigo_postal, Mode=TwoWay}" Keyboard="Numeric" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Nacimiento}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorCpMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorCpVisible, Mode=OneWay}" />
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout x:Name="Complementos" Grid.Row="3" Orientation="Vertical" IsVisible="{Binding PanelComplementos}">
+                        <StackLayout>
+                            <Entry Placeholder="Ingrese número de hijos" HorizontalTextAlignment="Start" Keyboard="Numeric" Text="{Binding registro.numero_hijos, Mode=TwoWay}" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Escolaridad}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorHijosMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorHijosVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Escolaridad" Placeholder="Ingrese su escolaridad" HorizontalTextAlignment="Start" Text="{Binding sEscolaridad, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference EstadoCivil}" Focused="Handle_FocusedEscolaridad" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorEscolaridadMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEscolaridadVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="EstadoCivil" Placeholder="Ingrese su estado civil" HorizontalTextAlignment="Start" Text="{Binding sEstadoCivil, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Necesidad}" Focused="Handle_FocusedEstadoCivil" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorEstadoCivildMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEstadoCivilVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleEscolaridad}">
+                            <ListView ItemsSource="{Binding Escolaridades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EscolaridadSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="Necesidad" Placeholder="Ingrese su necesidad" HorizontalTextAlignment="Start" Text="{Binding sNecesidad, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference INE}" Focused="Handle_FocusedNecesidad" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorNecesidadMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNecesidadVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleEstadoCivil}">
+                            <ListView ItemsSource="{Binding EstadoCiviles}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EstadoCivilSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout>
+                            <Entry x:Name="INE" Placeholder="Ingrese INE/IFE" HorizontalTextAlignment="Start" Text="{Binding registro.INE}" Keyboard="{Binding keyboard}" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorIneMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorIneVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleNecesidad}">
+                            <ListView ItemsSource="{Binding Necesidades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding NecesidadSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding descripcion}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout Grid.Row="16">
+                            <Button Text="Guardar Registro" Command="{Binding GuardaRegistroCommand}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
+                        </StackLayout>
+                    </StackLayout>
+                </Grid>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -31,6 +31,10 @@ namespace CreeGuanajuatoMovil
                 {
                     Master = new MasterPage() { Title = "Main Page" },
                     Detail = new NavigationPage(new RegistroPage())
+                    {
+                        BarBackgroundColor = Color.White,
+                        BarTextColor = Color.Gray
+                    }
                 };
             }
             else {

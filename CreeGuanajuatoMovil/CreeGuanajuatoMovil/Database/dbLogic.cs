@@ -190,6 +190,17 @@ namespace CreeGuanajuatoMovil.Database
         }
 
         /// <summary>
+        /// Obtienes the municipio por estado and by text.
+        /// </summary>
+        /// <returns>The municipio por estado and by text.</returns>
+        /// <param name="id_estado">Identifier estado.</param>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Municipio>> ObtieneMunicipioPorEstadoAndByText(int id_estado, string busqueda)
+        {
+            return database.Table<Municipio>().Where(i => i.id_estado == id_estado && i.nombre_municipio.Contains(busqueda)).ToListAsync();
+        }
+
+        /// <summary>
         /// Modifica un municipio
         /// </summary>
         /// <param name="municipio">Modelo del municipio</param>
@@ -269,6 +280,17 @@ namespace CreeGuanajuatoMovil.Database
         public Task<List<Colonia>> ObtieneColoniasPorMunicipio(int id_municipio)
         {
             return database.Table<Colonia>().Where(i => i.id_municipio == id_municipio).ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtienes the colonias por municipio by text.
+        /// </summary>
+        /// <returns>The colonias por municipio by text.</returns>
+        /// <param name="id_municipio">Identifier municipio.</param>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Colonia>> ObtieneColoniasPorMunicipioByText(int id_municipio, string busqueda)
+        {
+            return database.Table<Colonia>().Where(i => i.id_municipio == id_municipio && i.nombre_colonia.Contains(busqueda)).ToListAsync();
         }
 
         /// <summary>
@@ -354,6 +376,17 @@ namespace CreeGuanajuatoMovil.Database
         }
 
         /// <summary>
+        /// Obtienes the direcciones por colonia by text.
+        /// </summary>
+        /// <returns>The direcciones por colonia by text.</returns>
+        /// <param name="id_colonia">Identifier colonia.</param>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Direccion>> ObtieneDireccionesPorColoniaByText(int id_colonia, string busqueda)
+        {
+            return database.Table<Direccion>().Where(i => i.id_colonia == id_colonia && (i.calle.Contains(busqueda) || i.numero.Contains(busqueda)) ).ToListAsync();
+        }
+
+        /// <summary>
         /// Modifica una dirección
         /// </summary>
         /// <param name="direccion">Modelo de dirección</param>
@@ -413,6 +446,16 @@ namespace CreeGuanajuatoMovil.Database
         public Task<List<Necesidad>> ObtieneNecesidades()
         {
             return database.Table<Necesidad>().ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtienes the necesidades by text.
+        /// </summary>
+        /// <returns>The necesidades by text.</returns>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Necesidad>> ObtieneNecesidadesByText(string busqueda)
+        {
+            return database.Table<Necesidad>().Where(i => i.descripcion.Contains(busqueda)).ToListAsync();
         }
 
         /// <summary>
@@ -487,6 +530,16 @@ namespace CreeGuanajuatoMovil.Database
         }
 
         /// <summary>
+        /// Obtienes the escolaridad by text.
+        /// </summary>
+        /// <returns>The escolaridad by text.</returns>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Escolaridad>> ObtieneEscolaridadByText(string busqueda)
+        {
+            return database.Table<Escolaridad>().Where(i => i.nombre.Contains(busqueda)).ToListAsync();
+        }
+
+        /// <summary>
         /// Modifica registro de escolaridad
         /// </summary>
         /// <param name="escolaridad">Modelo de escolaridad</param>
@@ -546,6 +599,16 @@ namespace CreeGuanajuatoMovil.Database
         public Task<List<EstadoCivil>> ObtieneEstadoCivil()
         {
             return database.Table<EstadoCivil>().ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtienes the estado civil by text.
+        /// </summary>
+        /// <returns>The estado civil by text.</returns>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<EstadoCivil>> ObtieneEstadoCivilByText(string busqueda)
+        {
+            return database.Table<EstadoCivil>().Where(i => i.nombre.Contains(busqueda)).ToListAsync();
         }
 
         /// <summary>

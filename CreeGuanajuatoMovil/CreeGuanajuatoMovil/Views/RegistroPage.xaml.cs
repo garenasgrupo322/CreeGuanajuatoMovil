@@ -21,5 +21,49 @@ namespace CreeGuanajuatoMovil.Views
             BindingContext = viewModel = new RegistroPageViewModel();
             viewModel.Navigation = this.Navigation;
         }
-	}
+
+        #region eventos focus
+
+        void Handle_FocusedEstado(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Estado");
+        }
+
+        void Handle_FocusedMunicipio(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Municipio");
+        }
+
+        void Handle_FocusedColonia(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Colonia");
+        }
+
+        void Handle_FocusedCalle(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Calle");
+        }
+
+        void Handle_FocusedEscolaridad(object sender, Xamarin.Forms.FocusEventArgs e)   
+        {
+            viewModel.focusEnry("Escolaridad");
+        }
+
+        void Handle_FocusedEstadoCivil(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("EstadoCivil");
+        }
+
+        void Handle_FocusedNecesidad(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Necesidad");
+        }
+
+        #endregion
+
+        void Handle_Unfocused(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.UnfocusEnry();
+        }
+    }
 }

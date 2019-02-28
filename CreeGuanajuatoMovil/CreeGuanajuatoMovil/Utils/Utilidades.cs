@@ -7,8 +7,8 @@ namespace CreeGuanajuatoMovil.Utils
 {
     public class Utilidades
     {
-        public async Task ShowMessage(string message,
-            string title,
+        public static async Task ShowMessage(string title,
+            string message,
             string buttonText,
             Action afterHideCallback)
         {

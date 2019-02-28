@@ -54,5 +54,19 @@ namespace CreeGuanajuatoMovil.Services
 
         #endregion
 
+        public Task<Registro> GuardaRegistroAsync(Registro registro)
+        {
+            return restService.GuardaRegistroAsync(registro);
+        }
+
+        public Task<List<Registro>> ObtieneRegistrosFiltradosAsync(int id_estado, int id_municipio, int id_colonia, int id_escolaridad, int id_necesidad, string busqueda)
+        {
+            return restService.ObtieneRegistrosFiltradosAsync(id_estado, id_municipio, id_colonia, id_escolaridad, id_necesidad, busqueda);
+        }
+
+        public Task<GoogleAPI> ObtieneUbicacion(double lat, double lng)
+        {
+            return restService.ObtieneUbicacion(lat, lng);
+        }
     }
 }

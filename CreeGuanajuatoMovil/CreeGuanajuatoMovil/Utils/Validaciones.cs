@@ -7,7 +7,7 @@ namespace CreeGuanajuatoMovil.Utils
     public class Validaciones
     {
 
-        public bool IsEmail() {
+        public static bool IsEmail(string email) {
             return true;
         }
 

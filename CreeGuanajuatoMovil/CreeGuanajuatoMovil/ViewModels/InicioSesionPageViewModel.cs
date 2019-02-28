@@ -63,7 +63,7 @@ namespace CreeGuanajuatoMovil.ViewModels
         #endregion
 
         public InicioSesionPageViewModel() {
-            imageSorceLogo = ImageSource.FromResource("CreeGuanajuatoMovil.Images.profile.png");
+            imageSorceLogo = ImageSource.FromResource("CreeGuanajuatoMovil.Images.logo_color.png");
             iconQR = ImageSource.FromResource("CreeGuanajuatoMovil.Images.code_qr.png");
             IniciaSesion = new Command(IniciaSesionAsync);
             IniciaSesionQR = new Command(IniciaSesionQRAsync);
@@ -76,35 +76,27 @@ namespace CreeGuanajuatoMovil.ViewModels
         public async void IniciaSesionAsync() {
             IsBusy = true;
 
-            var res = await App.Current.MainPage.DisplayAlert("Notificación",
-                "Para el uso de la aplicacion es necesario descargar datos, esto es recomendable hacerlo con una conexión wifi ¿Que desea hacer?", "Continuar", "Cancelar");
-            if (res)
-            {
-                ///Obtenemos los catalogos de los ws
-                List<Estado> estados = await App.oServiceManager.ObtieneEstados();
-                List<Colonia> colonias = await App.oServiceManager.ObtieneColonias();
-                List<Municipio> municipios = await App.oServiceManager.ObtieneMunicipios();
-                List<Direccion> direcciones = await App.oServiceManager.ObtieneDirecciones();
-                List<Necesidad> necesidades = await App.oServiceManager.ObtieneNecesidades();
-                List<Escolaridad> escolaridads = await App.oServiceManager.ObtieneEscolaridadAsync();
-                List<EstadoCivil> estadoCivils = await App.oServiceManager.ObtieneEstadoCivilAsync();
+            ///Obtenemos los catalogos de los ws
+            List<Estado> estados = await App.oServiceManager.ObtieneEstados();
+            List<Colonia> colonias = await App.oServiceManager.ObtieneColonias();
+            List<Municipio> municipios = await App.oServiceManager.ObtieneMunicipios();
+            List<Direccion> direcciones = await App.oServiceManager.ObtieneDirecciones();
+            List<Necesidad> necesidades = await App.oServiceManager.ObtieneNecesidades();
+            List<Escolaridad> escolaridads = await App.oServiceManager.ObtieneEscolaridadAsync();
+            List<EstadoCivil> estadoCivils = await App.oServiceManager.ObtieneEstadoCivilAsync();
 
-                ///Eliminamos tablas de la base de datos
-                App.DataBase.dropTables();
+            ///Eliminamos tablas de la base de datos
+            App.DataBase.dropTables();
 
-                //Guardamos nuevos datos en base de datos local
-                await App.DataBase.GuardaEstado(estados);
-                await App.DataBase.GuardaMunicipio(municipios);
-                await App.DataBase.GuardaColonia(colonias);
-                await App.DataBase.GuardaDireccion(direcciones);
-                await App.DataBase.GuardaNecesidad(necesidades);
-                await App.DataBase.GuardaEscolaridad(escolaridads);
-                await App.DataBase.GuardaEstadoCivil(estadoCivils);
-                InicioCorrectoRedireccion();
-            }
-            else {
-                IsBusy = false;
-            }
+            //Guardamos nuevos datos en base de datos local
+            await App.DataBase.GuardaEstado(estados);
+            await App.DataBase.GuardaMunicipio(municipios);
+            await App.DataBase.GuardaColonia(colonias);
+            await App.DataBase.GuardaDireccion(direcciones);
+            await App.DataBase.GuardaNecesidad(necesidades);
+            await App.DataBase.GuardaEscolaridad(escolaridads);
+            await App.DataBase.GuardaEstadoCivil(estadoCivils);
+            InicioCorrectoRedireccion();
         }
 
 
@@ -143,10 +135,14 @@ namespace CreeGuanajuatoMovil.ViewModels
         /// </summary>
         public void InicioCorrectoRedireccion() {
             Settings.IsLoggedIn = true;
-            App.Current.MainPage = new MasterDetailPage()
+            Application.Current.MainPage = new MasterDetailPage()
             {
                 Master = new MasterPage() { Title = "Main Page" },
                 Detail = new NavigationPage(new RegistroPage())
+                {
+                    BarBackgroundColor = Color.White,
+                    BarTextColor = Color.Gray,
+                }
             };
         }
     }

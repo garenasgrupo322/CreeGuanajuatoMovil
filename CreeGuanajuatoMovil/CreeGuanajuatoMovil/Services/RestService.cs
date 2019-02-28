@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CreeGuanajuatoMovil.Services
@@ -216,6 +217,109 @@ namespace CreeGuanajuatoMovil.Services
             return estadoCivils;
         }
 
+
+
         #endregion
+
+        public async Task<Registro> GuardaRegistroAsync(Registro registro)
+        {
+            var uri = new Uri(Constants.RestUrl + "Registroes");
+            Registro result = new Registro();
+            try
+            {
+                var postDriver = JsonConvert.SerializeObject(registro);
+                var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                /*client.DefaultRequestHeaders
+                    .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));*/
+                response = await client.PostAsync(uri, content);
+
+                var request = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<Registro>(request);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<List<Registro>> ObtieneRegistrosFiltradosAsync(int id_estado, int id_municipio, int id_colonia, int id_escolaridad,
+            int id_necesidad, string busqueda)
+        {
+            List<Registro> registros = new List<Registro>();
+
+            Registro parameter = new Registro();
+
+            parameter.Estado = new Estado();
+            parameter.Estado.id_estado = id_estado;
+
+            parameter.Municipio = new Municipio();
+            parameter.Municipio.id_municipio = id_municipio;
+
+            parameter.Colonia = new Colonia();
+            parameter.Colonia.id_colonia = id_colonia;
+
+            parameter.Escolaridad = new Escolaridad();
+            parameter.Escolaridad.id_escolaridad = id_escolaridad;
+
+            parameter.Necesidad = new Necesidad();
+            parameter.Necesidad.id_necesidad = id_necesidad;
+
+            parameter.busqueda = busqueda;
+            try
+            {
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Registroes/GetReport");
+                response = await client.GetAsync(uri);
+
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    registros = JsonConvert.DeserializeObject<List<Registro>>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return registros;
+        }
+
+        public async Task<GoogleAPI> ObtieneUbicacion(double lat, double lng)
+        {
+            GoogleAPI registros = new GoogleAPI();
+
+            string[] parametros = new string[3];
+            parametros[0] = lat.ToString();
+            parametros[1] = lng.ToString();
+            parametros[2] = Constants.googleKey;
+
+            try
+            {
+                HttpResponseMessage response = null;
+                var uri = new Uri(string.Format("https://maps.googleapis.com/maps/api/geocode/json?latlng={0},{1}&key={2}", parametros));
+                response = await client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    registros = JsonConvert.DeserializeObject<GoogleAPI>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return registros;
+        }
     }
 }

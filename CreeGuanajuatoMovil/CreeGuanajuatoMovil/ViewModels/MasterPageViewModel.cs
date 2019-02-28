@@ -29,13 +29,24 @@ namespace CreeGuanajuatoMovil.ViewModels
                     switch (value)
                     {
                         case "1":
-                            navPage.PushAsync(new RegistroPage());
+                            App.Current.MainPage = new MasterDetailPage()
+                            {
+                                Master = new MasterPage() { Title = "Main Page" },
+                                Detail = new NavigationPage(new RegistroPage())
+                            };
                             break;
+
                         case "2":
-                            navPage.PushAsync(new RegistroPage());
+                            App.Current.MainPage = new MasterDetailPage()
+                            {
+                                Master = new MasterPage() { Title = "Main Page" },
+                                Detail = new NavigationPage(new FiltrosPage())
+                            };
                             break;
+
                         case "100":
                             Settings.IsLoggedIn = false;
+                            App.DataBase.dropTables();
                             App.Current.MainPage = new NavigationPage(new InicioSesionPage());
                             break;
                     }
