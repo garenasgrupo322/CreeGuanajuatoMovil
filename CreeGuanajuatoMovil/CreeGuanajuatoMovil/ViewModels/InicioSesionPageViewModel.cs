@@ -1,6 +1,7 @@
 ﻿using CreeGuanajuatoMovil.Helpers;
 using CreeGuanajuatoMovil.Models;
 using CreeGuanajuatoMovil.Views;
+using System;
 using System.Collections.Generic;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -44,9 +45,9 @@ namespace CreeGuanajuatoMovil.ViewModels
             set { SetProperty(ref _ErrorContraMensaje, value); }
         }
 
-        private string _ErrorContraVisible;
+        private bool _ErrorContraVisible;
 
-        public string ErrorContraVisible
+        public bool ErrorContraVisible
         {
             get { return _ErrorContraVisible; }
             set { SetProperty(ref _ErrorContraVisible, value); }
@@ -58,6 +59,22 @@ namespace CreeGuanajuatoMovil.ViewModels
         {
             get { return _message; }
             set { SetProperty(ref _message, value); }
+        }
+
+        private string _sUsuario;
+
+        public string sUsuario
+        {
+            get { return _sUsuario; }
+            set { SetProperty(ref _sUsuario, value); }
+        }
+
+        private string _sContrasena;
+
+        public string sContrasena
+        {
+            get { return _sContrasena; }
+            set { SetProperty(ref _sContrasena, value); }
         }
 
         #endregion
@@ -75,35 +92,80 @@ namespace CreeGuanajuatoMovil.ViewModels
         /// </summary>
         public async void IniciaSesionAsync() {
             IsBusy = true;
+            if (!valida())
+                IsBusy = false;
+            else {
 
-            ///Obtenemos los catalogos de los ws
-            List<Estado> estados = await App.oServiceManager.ObtieneEstados();
-            List<Colonia> colonias = await App.oServiceManager.ObtieneColonias();
-            List<Municipio> municipios = await App.oServiceManager.ObtieneMunicipios();
-            List<Direccion> direcciones = await App.oServiceManager.ObtieneDirecciones();
-            List<Necesidad> necesidades = await App.oServiceManager.ObtieneNecesidades();
-            List<Escolaridad> escolaridads = await App.oServiceManager.ObtieneEscolaridadAsync();
-            List<EstadoCivil> estadoCivils = await App.oServiceManager.ObtieneEstadoCivilAsync();
+                Usuario usuario = await App.oServiceManager.IniciarSesion(sUsuario, sContrasena);
 
-            ///Eliminamos tablas de la base de datos
-            App.DataBase.dropTables();
+                if (!string.IsNullOrEmpty(usuario.message))
+                {
+                    IsBusy = false;
+                    await Application.Current.MainPage.DisplayAlert("Error", usuario.message, "Aceptar");
+                }
+                else
+                {
+                    Settings.AccessToken = usuario.token;
+                    Settings.NameUserLogin = usuario.nombre + " " + usuario.apellido_paterno;
+                    Settings.AccessTokenType = usuario.rol;
 
-            //Guardamos nuevos datos en base de datos local
-            await App.DataBase.GuardaEstado(estados);
-            await App.DataBase.GuardaMunicipio(municipios);
-            await App.DataBase.GuardaColonia(colonias);
-            await App.DataBase.GuardaDireccion(direcciones);
-            await App.DataBase.GuardaNecesidad(necesidades);
-            await App.DataBase.GuardaEscolaridad(escolaridads);
-            await App.DataBase.GuardaEstadoCivil(estadoCivils);
-            InicioCorrectoRedireccion();
+                    ///Obtenemos los catalogos de los ws
+                    List<Estado> estados = await App.oServiceManager.ObtieneEstados();
+                    List<Colonia> colonias = await App.oServiceManager.ObtieneColonias();
+                    List<Municipio> municipios = await App.oServiceManager.ObtieneMunicipios();
+                    List<Direccion> direcciones = await App.oServiceManager.ObtieneDirecciones();
+                    List<Necesidad> necesidades = await App.oServiceManager.ObtieneNecesidades();
+                    List<Escolaridad> escolaridads = await App.oServiceManager.ObtieneEscolaridadAsync();
+                    List<EstadoCivil> estadoCivils = await App.oServiceManager.ObtieneEstadoCivilAsync();
+
+                    ///Eliminamos tablas de la base de datos
+                    App.DataBase.dropTables();
+
+                    //Guardamos nuevos datos en base de datos local
+                    await App.DataBase.GuardaEstado(estados);
+                    await App.DataBase.GuardaMunicipio(municipios);
+                    await App.DataBase.GuardaColonia(colonias);
+                    await App.DataBase.GuardaDireccion(direcciones);
+                    await App.DataBase.GuardaNecesidad(necesidades);
+                    await App.DataBase.GuardaEscolaridad(escolaridads);
+                    await App.DataBase.GuardaEstadoCivil(estadoCivils);
+
+                    Settings.IsDateLogin = DateTime.Now;
+                    InicioCorrectoRedireccion();
+                }
+            }
         }
 
 
         /// <summary>
         /// Validaciones de usuario y contraseña
         /// </summary>
-        public void valida() {
+        public bool valida() {
+            bool success = true;
+
+            if (string.IsNullOrEmpty(sUsuario))
+            {
+                success = false;
+                ErrorUsuarioVisible = true;
+                ErrorUsuarioMensaje = "Por favor ingrese su usuario";
+            }
+            else
+            {
+                ErrorUsuarioVisible = false;
+            }
+
+            if (string.IsNullOrEmpty(sContrasena))
+            {
+                success = false;
+                ErrorContraVisible = true;
+                ErrorContraMensaje = "Por favor ingrese su contraseña";
+            }
+            else
+            {
+                ErrorContraVisible = false;
+            }
+
+            return success;
 
         }
 

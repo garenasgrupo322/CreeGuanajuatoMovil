@@ -16,6 +16,7 @@ namespace CreeGuanajuatoMovil.Services
         Task<List<Necesidad>> ObtieneNecesidades();
         Task<List<Escolaridad>> ObtieneEscolaridadAsync();
         Task<List<EstadoCivil>> ObtieneEstadoCivilAsync();
+        Task<List<Usuario>> ObtieneUsuario();
         #endregion
 
         Task<Registro> GuardaRegistroAsync(Registro registro);
@@ -23,5 +24,7 @@ namespace CreeGuanajuatoMovil.Services
         Task<List<Registro>> ObtieneRegistrosFiltradosAsync(int id_estado, int id_municipio, int id_colonia, int id_escolaridad, int id_necesidad, string busqueda);
 
         Task<GoogleAPI> ObtieneUbicacion(double lat, double lng);
+
+        Task<Usuario> IniciarSesion(string usuario, string contrasena);
     }
 }

@@ -23,15 +23,18 @@
                 </Grid.RowDefinitions>
                 <ActivityIndicator Color="#2E64FE" IsRunning="{Binding IsBusy }" IsVisible="false" Grid.Row="0" Grid.RowSpan="8" HeightRequest="200" />
                 <StackLayout Grid.Row="1">
-                    <Entry x:Name="Estado" Placeholder="Ingrese su estado" HorizontalTextAlignment="Start" Text="{Binding sEstado, Mode=TwoWay}" Keyboard="Text" Focused="Handle_FocusedEstado" />
+                    <Entry x:Name="Estado" Placeholder="Ingrese su estado" HorizontalTextAlignment="Start" Text="{Binding sEstado, Mode=TwoWay}" Keyboard="Text" 
+                           Focused="Handle_FocusedEstado" />
                     <Label Text="{Binding ErrorEstadoMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEstadoVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="2">
-                    <Entry x:Name="Municipio" Placeholder="Ingrese su municipio" HorizontalTextAlignment="Start" Text="{Binding sMunicipio, Mode=TwoWay}" Keyboard="Text" Focused="Handle_FocusedMunicipio" />
+                    <Entry x:Name="Municipio" Placeholder="Ingrese su municipio" HorizontalTextAlignment="Start" Text="{Binding sMunicipio, Mode=TwoWay}" 
+                           Keyboard="Text" Focused="Handle_FocusedMunicipio" />
                     <Label Text="{Binding ErrorMunicipioMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorMunicipioVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="2" IsVisible="{Binding IsVisibleEstado}">
-                    <ListView ItemsSource="{Binding Estados}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EstadoSeleccionado, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Estados}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                              SelectedItem="{Binding EstadoSeleccionado, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding nombre_estado}" />
@@ -40,11 +43,13 @@
                     </ListView>
                 </StackLayout>
                 <StackLayout Grid.Row="3">
-                    <Entry x:Name="Colonia" Placeholder="Ingrese su colonia" HorizontalTextAlignment="Start" Text="{Binding sColonia, Mode=TwoWay}" Keyboard="Text" Focused="Handle_FocusedColonia" />
+                    <Entry x:Name="Colonia" Placeholder="Ingrese su colonia" HorizontalTextAlignment="Start" Text="{Binding sColonia, Mode=TwoWay}" Keyboard="Text" 
+                           Focused="Handle_FocusedColonia" />
                     <Label Text="{Binding ErrorColoniaMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorColoniaVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="3" IsVisible="{Binding IsVisibleMunicipio}">
-                    <ListView ItemsSource="{Binding Municipios}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding MunicipioSeleccionado, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Municipios}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                              SelectedItem="{Binding MunicipioSeleccionado, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding nombre_municipio}" />
@@ -53,11 +58,13 @@
                     </ListView>
                 </StackLayout>
                 <StackLayout Grid.Row="4">
-                    <Entry x:Name="CP" Placeholder="Ingrese su CP" HorizontalTextAlignment="Start" Text="{Binding ColoniaSeleccionado.codigo_postal, Mode=TwoWay}" Keyboard="Numeric" />
+                    <Entry x:Name="CP" Placeholder="Ingrese su CP" HorizontalTextAlignment="Start" Text="{Binding ColoniaSeleccionado.codigo_postal, Mode=TwoWay}" 
+                           Keyboard="Numeric" />
                     <Label Text="{Binding ErrorCpMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorCpVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="4" IsVisible="{Binding IsVisibleColonia}">
-                    <ListView ItemsSource="{Binding Colonias}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding ColoniaSeleccionado, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Colonias}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                              SelectedItem="{Binding ColoniaSeleccionado, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding nombre_colonia}" />
@@ -66,15 +73,18 @@
                     </ListView>
                 </StackLayout>
                 <StackLayout Grid.Row="5">
-                    <Entry x:Name="Escolaridad" Placeholder="Ingrese su escolaridad" HorizontalTextAlignment="Start" Text="{Binding sEscolaridad, Mode=TwoWay}" Keyboard="Text" Focused="Handle_FocusedEscolaridad" />
+                    <Entry x:Name="Escolaridad" Placeholder="Ingrese su escolaridad" HorizontalTextAlignment="Start" Text="{Binding sEscolaridad, Mode=TwoWay}" 
+                           Keyboard="Text" Focused="Handle_FocusedEscolaridad" />
                     <Label Text="{Binding ErrorEscolaridadMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEscolaridadVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="6">
-                    <Entry x:Name="Necesidad" Placeholder="Ingrese su necesidad" HorizontalTextAlignment="Start" Text="{Binding sNecesidad, Mode=TwoWay}" Keyboard="Text" Focused="Handle_FocusedNecesidad" />
+                    <Entry x:Name="Necesidad" Placeholder="Ingrese su necesidad" HorizontalTextAlignment="Start" Text="{Binding sNecesidad, Mode=TwoWay}" 
+                           Keyboard="Text" Focused="Handle_FocusedNecesidad" />
                     <Label Text="{Binding ErrorNecesidadMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNecesidadVisible, Mode=OneWay}" />
                 </StackLayout>
                 <StackLayout Grid.Row="6" IsVisible="{Binding IsVisibleEscolaridad}">
-                    <ListView ItemsSource="{Binding Escolaridades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EscolaridadSeleccionado, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Escolaridades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                              SelectedItem="{Binding EscolaridadSeleccionado, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding nombre}" />
@@ -86,7 +96,8 @@
                     <Entry Placeholder="Ingrese su busqueda" HorizontalTextAlignment="Start" Text="{Binding Busqueda, Mode=TwoWay}" Keyboard="Text" />
                 </StackLayout>
                 <StackLayout Grid.Row="7" IsVisible="{Binding IsVisibleNecesidad}">
-                    <ListView ItemsSource="{Binding Necesidades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding NecesidadSeleccionado, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Necesidades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                              SelectedItem="{Binding NecesidadSeleccionado, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <TextCell Text="{Binding descripcion}" />
@@ -104,10 +115,14 @@
                             <ColumnDefinition Width="5*"/>
                         </Grid.ColumnDefinitions>
                         
-                        <StackLayout Grid.Row="0" Grid.Column="0">
+                        <StackLayout Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
+                            <Button Text="Limpiar" Command="{Binding LimpiaFiltrosCommand}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
+                        </StackLayout>
+                        
+                        <StackLayout Grid.Row="1" Grid.Column="0">
                             <Button Text="Mapa" Command="{Binding FiltraRegistroMapaCommand}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
                         </StackLayout>
-                        <StackLayout Grid.Row="0" Grid.Column="1">
+                        <StackLayout Grid.Row="1" Grid.Column="1">
                             <Button Text="Reporte" Command="{Binding FiltraRegistroCommand}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
                         </StackLayout>
                     </Grid>

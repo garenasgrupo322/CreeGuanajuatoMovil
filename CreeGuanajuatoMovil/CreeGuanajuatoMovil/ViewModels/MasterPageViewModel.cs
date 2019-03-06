@@ -8,9 +8,20 @@ namespace CreeGuanajuatoMovil.ViewModels
     public class MasterPageViewModel
     {
         public string NombreUsuario { get; set; }
+        public bool IsUsuarioVisible { get; set; }
 
         public MasterPageViewModel() {
             NombreUsuario = Settings.NameUserLogin;
+
+            if(Settings.AccessTokenType.Contains("Administrador"))
+            {
+                IsUsuarioVisible = true;
+            }
+            else
+            {
+                IsUsuarioVisible = false;
+            }
+
         }
 
         public ICommand NavigationCommand
@@ -29,7 +40,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                     switch (value)
                     {
                         case "1":
-                            App.Current.MainPage = new MasterDetailPage()
+                            Application.Current.MainPage = new MasterDetailPage()
                             {
                                 Master = new MasterPage() { Title = "Main Page" },
                                 Detail = new NavigationPage(new RegistroPage())
@@ -37,17 +48,25 @@ namespace CreeGuanajuatoMovil.ViewModels
                             break;
 
                         case "2":
-                            App.Current.MainPage = new MasterDetailPage()
+                            Application.Current.MainPage = new MasterDetailPage()
                             {
                                 Master = new MasterPage() { Title = "Main Page" },
                                 Detail = new NavigationPage(new FiltrosPage())
                             };
                             break;
 
+                        case "3":
+                            Application.Current.MainPage = new MasterDetailPage()
+                            {
+                                Master = new MasterPage() { Title = "Main Page" },
+                                Detail = new NavigationPage(new UsuariosPage())
+                            };
+                            break;
+
                         case "100":
                             Settings.IsLoggedIn = false;
                             App.DataBase.dropTables();
-                            App.Current.MainPage = new NavigationPage(new InicioSesionPage());
+                            Application.Current.MainPage = new NavigationPage(new InicioSesionPage());
                             break;
                     }
 

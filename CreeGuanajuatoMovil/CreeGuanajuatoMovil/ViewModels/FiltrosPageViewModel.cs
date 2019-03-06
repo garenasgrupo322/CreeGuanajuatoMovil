@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using CreeGuanajuatoMovil.Models;
 using CreeGuanajuatoMovil.Views;
@@ -15,6 +15,7 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         public Command FiltraRegistroCommand { get; set; }
         public Command FiltraRegistroMapaCommand { get; set; }
+        public Command LimpiaFiltrosCommand { get; set; }
         #endregion
 
         #region Properties Estado
@@ -451,26 +452,30 @@ namespace CreeGuanajuatoMovil.ViewModels
 
             FiltraRegistroCommand = new Command(FiltraRegistros);
             FiltraRegistroMapaCommand = new Command(FiltraRegistrosMapa);
+            LimpiaFiltrosCommand = new Command(LimpiaFiltros);
         }
 
         async Task getEstados(string busqueda)
         {
-            if (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2)
+            IsVisibleEstado = false;
+            if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Estado item in Estados)
+                var count = Estados.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Estados.Remove(item);
+                    Estados.RemoveAt(0);
                 }
 
                 List<Estado> estados = await App.DataBase.ObtieneEstadosByText(busqueda);
 
                 if (estados.Count > 0)
                 {
-                    IsVisibleEstado = true;
                     foreach (Estado item in estados)
                     {
                         Estados.Add(item);
                     }
+                    IsVisibleEstado = true;
                 }
                 else
                 {
@@ -485,11 +490,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getMunicipios(int id_estado, string busqueda)
         {
-            if (id_estado != 0 && (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2))
+            IsVisibleMunicipio = false;
+            if (id_estado != 0 && (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2))
             {
-                foreach (Municipio item in Municipios)
+                var count = Municipios.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Municipios.Remove(item);
+                    Municipios.RemoveAt(0);
                 }
 
                 List<Municipio> municipios = await App.DataBase.ObtieneMunicipioPorEstadoAndByText(id_estado, busqueda);
@@ -516,11 +524,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getColonias(int id_municipio, string busqueda)
         {
-            if (id_municipio != 0 && (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2))
+            IsVisibleColonia = false;
+            if (id_municipio != 0 && (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2))
             {
-                foreach (Colonia item in Colonias)
+                var count = Colonias.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Colonias.Remove(item);
+                    Colonias.RemoveAt(0);
                 }
 
                 List<Colonia> colonias = await App.DataBase.ObtieneColoniasPorMunicipioByText(id_municipio, busqueda);
@@ -548,11 +559,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getEscolaridades(string busqueda)
         {
+            IsVisibleEscolaridad = false;
             if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Escolaridad item in Escolaridades)
+                var count = Escolaridades.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Escolaridades.Remove(item);
+                    Escolaridades.RemoveAt(0);
                 }
 
                 List<Escolaridad> escolaridads = await App.DataBase.ObtieneEscolaridadByText(busqueda);
@@ -578,11 +592,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getNecesidades(string busqueda)
         {
+            IsVisibleNecesidad = false;
             if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Necesidad item in Necesidades)
+                var count = Necesidades.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Necesidades.Remove(item);
+                    Necesidades.RemoveAt(0);
                 }
 
                 List<Necesidad> necesidads = await App.DataBase.ObtieneNecesidadesByText(busqueda);
@@ -634,54 +651,60 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         void FiltraRegistros()
         {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
-            var navPage = mdp.Detail as NavigationPage;
-            mdp.IsPresented = false;
+            if (valida())
+            {
+                var mdp = (Application.Current.MainPage as MasterDetailPage);
+                var navPage = mdp.Detail as NavigationPage;
+                mdp.IsPresented = false;
 
-            if (EstadoSeleccionado == null)
-                EstadoSeleccionado = new Estado();
+                if (EstadoSeleccionado == null)
+                    EstadoSeleccionado = new Estado();
 
-            if (MunicipioSeleccionado == null)
-                MunicipioSeleccionado = new Municipio();
+                if (MunicipioSeleccionado == null)
+                    MunicipioSeleccionado = new Municipio();
 
 
-            if (ColoniaSeleccionado == null)
-                ColoniaSeleccionado = new Colonia();
+                if (ColoniaSeleccionado == null)
+                    ColoniaSeleccionado = new Colonia();
 
-            if (EscolaridadSeleccionado == null)
-                EscolaridadSeleccionado = new Escolaridad();
+                if (EscolaridadSeleccionado == null)
+                    EscolaridadSeleccionado = new Escolaridad();
 
-            if (NecesidadSeleccionado == null)
-                NecesidadSeleccionado = new Necesidad();
+                if (NecesidadSeleccionado == null)
+                    NecesidadSeleccionado = new Necesidad();
 
-            navPage.PushAsync(new ReportePage(EstadoSeleccionado.id_estado, MunicipioSeleccionado.id_municipio, ColoniaSeleccionado.id_colonia, EscolaridadSeleccionado.id_escolaridad, 
-                NecesidadSeleccionado.id_necesidad, Busqueda));
+                navPage.PushAsync(new ReportePage(EstadoSeleccionado.id_estado, MunicipioSeleccionado.id_municipio, ColoniaSeleccionado.id_colonia, EscolaridadSeleccionado.id_escolaridad,
+                    NecesidadSeleccionado.id_necesidad, Busqueda));
+            }
         }
 
         void FiltraRegistrosMapa()
         {
-            var mdp = (Application.Current.MainPage as MasterDetailPage);
-            var navPage = mdp.Detail as NavigationPage;
-            mdp.IsPresented = false;
+            if (valida())
+            {
+                var mdp = (Application.Current.MainPage as MasterDetailPage);
+                var navPage = mdp.Detail as NavigationPage;
+                mdp.IsPresented = false;
 
-            if (EstadoSeleccionado == null)
-                EstadoSeleccionado = new Estado();
+                if (EstadoSeleccionado == null)
+                    EstadoSeleccionado = new Estado();
 
-            if (MunicipioSeleccionado == null)
-                MunicipioSeleccionado = new Municipio();
+                if (MunicipioSeleccionado == null)
+                    MunicipioSeleccionado = new Municipio();
 
 
-            if (ColoniaSeleccionado == null)
-                ColoniaSeleccionado = new Colonia();
+                if (ColoniaSeleccionado == null)
+                    ColoniaSeleccionado = new Colonia();
 
-            if (EscolaridadSeleccionado == null)
-                EscolaridadSeleccionado = new Escolaridad();
+                if (EscolaridadSeleccionado == null)
+                    EscolaridadSeleccionado = new Escolaridad();
 
-            if (NecesidadSeleccionado == null)
-                NecesidadSeleccionado = new Necesidad();
+                if (NecesidadSeleccionado == null)
+                    NecesidadSeleccionado = new Necesidad();
 
-            navPage.PushAsync(new MapaPage(EstadoSeleccionado.id_estado, MunicipioSeleccionado.id_municipio, ColoniaSeleccionado.id_colonia, EscolaridadSeleccionado.id_escolaridad,
-                NecesidadSeleccionado.id_necesidad, Busqueda));
+                navPage.PushAsync(new MapaPage(EstadoSeleccionado.id_estado, MunicipioSeleccionado.id_municipio, ColoniaSeleccionado.id_colonia, EscolaridadSeleccionado.id_escolaridad,
+                    NecesidadSeleccionado.id_necesidad, Busqueda));
+            }
         }
 
         public void focusEnry(string sender)
@@ -710,5 +733,121 @@ namespace CreeGuanajuatoMovil.ViewModels
             }
         }
 
+        bool valida()
+        {
+            bool success = true;
+
+            if (!string.IsNullOrEmpty(sEstado))
+            {
+                ErrorEstadoVisible = false;
+                ErrorEstadoMensaje = "Por favor seleccione una opción de la lista desplegable";
+
+                if (EstadoSeleccionado == null)
+                {
+                    success = false;
+                    ErrorEstadoVisible = true;
+                }
+                else
+                {
+                    if (!EstadoSeleccionado.nombre_estado.Equals(sEstado))
+                    {
+                        success = false;
+                        ErrorEstadoVisible = true;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sMunicipio))
+            {
+                ErrorMunicipioVisible = false;
+                ErrorMunicipioMensaje = "Por favor seleccione una opción de la lista desplegable";
+
+                if (MunicipioSeleccionado == null)
+                {
+                    success = false;
+                    ErrorMunicipioVisible = true;
+                }
+                else
+                {
+                    if (!MunicipioSeleccionado.nombre_municipio.Equals(sMunicipio))
+                    {
+                        success = false;
+                        ErrorMunicipioVisible = true;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sColonia))
+            {
+                ErrorColoniaVisible = false;
+                ErrorColoniaMensaje = "Por favor seleccione una opción de la lista desplegable";
+
+                if (ColoniaSeleccionado == null)
+                {
+                    success = false;
+                    ErrorColoniaVisible = true;
+                }
+                else
+                {
+                    if (!ColoniaSeleccionado.nombre_colonia.Equals(sColonia)) 
+                    {
+                        success = false;
+                        ErrorColoniaVisible = true;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sEscolaridad))
+            {
+                ErrorEscolaridadVisible = false;
+                ErrorEscolaridadMensaje = "Por favor seleccione una opción de la lista desplegable";
+
+                if (EscolaridadSeleccionado == null)
+                {
+                    success = false;
+                    ErrorEscolaridadVisible = true;
+                }
+                else
+                {
+                    if (!EscolaridadSeleccionado.nombre.Equals(sEscolaridad))
+                    {
+                        success = false;
+                        ErrorEscolaridadVisible = true;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrEmpty(sNecesidad))
+            {
+                ErrorNecesidadVisible = false;
+                ErrorNecesidadMensaje = "Por favor seleccione una opción de la lista desplegable";
+
+                if (NecesidadSeleccionado == null)
+                {
+                    success = false;
+                    ErrorNecesidadVisible = true;
+                }
+                else
+                {
+                    if (!NecesidadSeleccionado.descripcion.Equals(sNecesidad))
+                    {
+                        success = false;
+                        ErrorNecesidadVisible = true;
+                    }
+                }
+            }
+
+            return success;
+        }
+
+        void LimpiaFiltros()
+        {
+            EstadoSeleccionado = new Estado();
+            MunicipioSeleccionado = new Municipio();
+            ColoniaSeleccionado = new Colonia();
+            EscolaridadSeleccionado = new Escolaridad();
+            NecesidadSeleccionado = new Necesidad();
+            Busqueda = string.Empty;
+        }
     }
 }

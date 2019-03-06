@@ -529,6 +529,11 @@ namespace CreeGuanajuatoMovil.Database
             return database.Table<Escolaridad>().ToListAsync();
         }
 
+        public Task<Escolaridad> ObtieneEscolaridad(int id_escolaridad)
+        {
+            return database.Table<Escolaridad>().Where(i => i.id_escolaridad.Equals(id_escolaridad)).FirstOrDefaultAsync();
+        }
+
         /// <summary>
         /// Obtienes the escolaridad by text.
         /// </summary>

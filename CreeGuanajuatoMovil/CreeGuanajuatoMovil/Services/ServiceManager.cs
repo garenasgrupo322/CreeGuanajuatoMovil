@@ -52,6 +52,11 @@ namespace CreeGuanajuatoMovil.Services
             return restService.ObtieneEstadoCivilAsync();
         }
 
+        public Task<List<Usuario>> ObtieneUsuario()
+        {
+            return restService.ObtieneUsuario();
+        }
+
         #endregion
 
         public Task<Registro> GuardaRegistroAsync(Registro registro)
@@ -68,5 +73,11 @@ namespace CreeGuanajuatoMovil.Services
         {
             return restService.ObtieneUbicacion(lat, lng);
         }
+
+        public Task<Usuario> IniciarSesion(string usuario, string contrasena)
+        {
+            return restService.IniciarSesion(usuario, contrasena);
+        }
+
     }
 }

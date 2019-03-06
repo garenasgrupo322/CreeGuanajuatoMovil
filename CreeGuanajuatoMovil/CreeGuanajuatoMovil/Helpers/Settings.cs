@@ -39,6 +39,9 @@ namespace CreeGuanajuatoMovil.Helpers
 
         private const string AccessTokenTypeCurrentUser = "AccessTokenTypeCurrentUser_key";
         private static readonly string AccessTokenCurrentUserTokenType = string.Empty;
+
+        private const string DateLogin = "DateLogin";
+        private static readonly DateTime DateLoginDefault = DateTime.Now;
         #endregion
 
 
@@ -58,6 +61,12 @@ namespace CreeGuanajuatoMovil.Helpers
         {
             get { return AppSettings.GetValueOrDefault(IsLoggedInTokenKey, IsLoggedInTokenDefault); }
             set { AppSettings.AddOrUpdateValue(IsLoggedInTokenKey, value); }
+        }
+
+        public static DateTime IsDateLogin
+        {
+            get { return AppSettings.GetValueOrDefault(DateLogin, DateLoginDefault); }
+            set { AppSettings.AddOrUpdateValue(DateLogin, value); }
         }
 
         public static int IdUserLogin

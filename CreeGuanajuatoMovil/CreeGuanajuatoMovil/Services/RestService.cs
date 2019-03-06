@@ -5,8 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using CreeGuanajuatoMovil.Helpers;
 
 namespace CreeGuanajuatoMovil.Services
 {
@@ -17,6 +19,11 @@ namespace CreeGuanajuatoMovil.Services
         public RestService()
         {
             client = new HttpClient();
+            client.DefaultRequestHeaders
+                    .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+            client.DefaultRequestHeaders
+              .Accept
+              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         #region catálogos   
@@ -230,11 +237,6 @@ namespace CreeGuanajuatoMovil.Services
                 var postDriver = JsonConvert.SerializeObject(registro);
                 var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                /*client.DefaultRequestHeaders
-                    .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
-                client.DefaultRequestHeaders
-                  .Accept
-                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));*/
                 response = await client.PostAsync(uri, content);
 
                 var request = await response.Content.ReadAsStringAsync();
@@ -254,29 +256,26 @@ namespace CreeGuanajuatoMovil.Services
         {
             List<Registro> registros = new List<Registro>();
 
-            Registro parameter = new Registro();
-
-            parameter.Estado = new Estado();
-            parameter.Estado.id_estado = id_estado;
-
-            parameter.Municipio = new Municipio();
-            parameter.Municipio.id_municipio = id_municipio;
-
-            parameter.Colonia = new Colonia();
-            parameter.Colonia.id_colonia = id_colonia;
-
-            parameter.Escolaridad = new Escolaridad();
-            parameter.Escolaridad.id_escolaridad = id_escolaridad;
-
-            parameter.Necesidad = new Necesidad();
-            parameter.Necesidad.id_necesidad = id_necesidad;
-
-            parameter.busqueda = busqueda;
             try
             {
-                HttpResponseMessage response = null;
+
                 var uri = new Uri(Constants.RestUrl + "Registroes/GetReport");
-                response = await client.GetAsync(uri);
+                var postDriver = JsonConvert.SerializeObject(new {
+                    id_estado = id_estado,
+                    id_municipio = id_municipio,
+                    id_colonia = id_colonia,
+                    id_escolaridad = id_escolaridad,
+                    id_necesidad = id_necesidad,
+                    busqueda = busqueda
+                });
+                var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                /*client.DefaultRequestHeaders
+                    .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));*/
+                response = await client.PostAsync(uri, content);
 
 
                 if (response.IsSuccessStatusCode)
@@ -320,6 +319,59 @@ namespace CreeGuanajuatoMovil.Services
             }
 
             return registros;
+        }
+
+        public async Task<Usuario> IniciarSesion(string usuario, string contrasena)
+        {
+            var uri = new Uri(Constants.RestUrl + "Users/authenticate");
+
+            Usuario result = new Usuario();
+            try
+            {
+                var postDriver = JsonConvert.SerializeObject(new
+                {
+                    username = usuario,
+                    password = contrasena
+                });
+
+                var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);    
+
+                var request = await response.Content.ReadAsStringAsync();
+                result = JsonConvert.DeserializeObject<Usuario>(request);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<List<Usuario>> ObtieneUsuario()
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            try
+            {
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Users");
+                response = await client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return usuarios;
         }
     }
 }

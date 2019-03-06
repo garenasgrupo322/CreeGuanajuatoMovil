@@ -20,6 +20,7 @@
             <StackLayout Margin="20,20,20,0" Grid.Row="1" Spacing="15">
                 <local:NavigationItem Text="Captura Beneficiario" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="1" Margin="10"/>
                 <local:NavigationItem Text="Reportes" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="2" Margin="10"/>
+                <local:NavigationItem Text="Usuarios" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="3" Margin="10" IsVisible="{Binding IsUsuarioVisible}"/>
                 <ContentView HeightRequest="1" BackgroundColor="Gray" />
                 <local:NavigationItem Text="Salir" Icon="fa-cog" Command="{Binding NavigationCommand}" CommandParameter="100" />
             </StackLayout>

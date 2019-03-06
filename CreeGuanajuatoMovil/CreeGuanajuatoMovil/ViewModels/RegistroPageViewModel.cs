@@ -943,26 +943,49 @@ namespace CreeGuanajuatoMovil.ViewModels
             SiguienteEntryCommand = new Command<View>((view) =>
             {
                 view?.Focus();
+
+                try
+                {
+                    Entry entry = (Entry)view;
+
+                    switch (entry?.Placeholder)
+                    {
+                        case "Ingrese su estado":
+                            Etapa = 2.0;
+                            break;
+
+                        case "Ingrese número de hijos":
+                            Etapa = 3.0;
+                            break;
+                    }
+                } catch(Exception ex)
+                {
+                    Debug.Print("@debug" + ex.Message);
+                }
+
             });
         }
 
         async Task getEstados(string busqueda) {
-            if (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2)
+            IsVisibleEstado = false;
+            if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Estado item in Estados)
+                var count = Estados.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Estados.Remove(item);
+                    Estados.RemoveAt(0);
                 }
 
                 List<Estado> estados = await App.DataBase.ObtieneEstadosByText(busqueda);
 
                 if (estados.Count > 0)
                 {
-                    IsVisibleEstado = true;
                     foreach (Estado item in estados)
                     {
                         Estados.Add(item);
                     }
+                    IsVisibleEstado = true;
                 }
                 else
                 {
@@ -977,11 +1000,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getMunicipios(int id_estado, string busqueda)
         {
-            if (id_estado != 0 && (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2))
+            IsVisibleMunicipio = false;
+            if (id_estado != 0 && (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2))
             {
-                foreach (Municipio item in Municipios)
+                var count = Municipios.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Municipios.Remove(item);
+                    Municipios.RemoveAt(0);
                 }
 
                 List<Municipio> municipios = await App.DataBase.ObtieneMunicipioPorEstadoAndByText(id_estado, busqueda);
@@ -1008,11 +1034,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getColonias(int id_municipio, string busqueda)
         {
-            if (id_municipio != 0 && (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2))
+            IsVisibleColonia = false;
+            if (id_municipio != 0 && (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2))
             {
-                foreach (Colonia item in Colonias)
+                var count = Colonias.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Colonias.Remove(item);
+                    Colonias.RemoveAt(0);
                 }
 
                 List<Colonia> colonias = await App.DataBase.ObtieneColoniasPorMunicipioByText(id_municipio, busqueda);
@@ -1040,11 +1069,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getDirecciones(int id_colonia, string busqueda)
         {
-            if (id_colonia != 0 && (!string.IsNullOrEmpty(busqueda) || busqueda.Length > 2))
+            IsVisibleDireccion = false;
+            if (id_colonia != 0 && (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2))
             {
-                foreach (Direccion item in Direcciones)
+                var count = Direcciones.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Direcciones.Remove(item);
+                    Direcciones.RemoveAt(0);
                 }
 
                 List<Direccion> direcciones = await App.DataBase.ObtieneDireccionesPorColoniaByText(id_colonia, busqueda);
@@ -1070,11 +1102,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getEscolaridades(string busqueda)
         {
+            IsVisibleEscolaridad = false; 
             if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Escolaridad item in Escolaridades)
+                var count = Escolaridades.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Escolaridades.Remove(item);
+                    Escolaridades.RemoveAt(0);
                 }
 
                 List<Escolaridad> escolaridads = await App.DataBase.ObtieneEscolaridadByText(busqueda);
@@ -1100,11 +1135,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getNecesidades(string busqueda)
         {
+            IsVisibleNecesidad = false;
             if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (Necesidad item in Necesidades)
+                var count = Necesidades.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    Necesidades.Remove(item);
+                    Necesidades.RemoveAt(0);
                 }
 
                 List<Necesidad> necesidads = await App.DataBase.ObtieneNecesidadesByText(busqueda);
@@ -1131,11 +1169,14 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         async Task getEstadosCiviles(string busqueda)
         {
+            IsVisibleEstadoCivil = false;
             if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
             {
-                foreach (EstadoCivil item in EstadoCiviles)
+                var count = EstadoCiviles.Count();
+
+                for (int i = 0; i < count; i++)
                 {
-                    EstadoCiviles.Remove(item);
+                    EstadoCiviles.RemoveAt(0);
                 }
 
                 List<EstadoCivil> estadoCivils = await App.DataBase.ObtieneEstadoCivilByText(busqueda);
@@ -1316,17 +1357,64 @@ namespace CreeGuanajuatoMovil.ViewModels
                 {
                    Registro registroexitoso = await App.oServiceManager.GuardaRegistroAsync(registro);
 
-                    if(registroexitoso.id_registro != 0)
+                    if(registroexitoso != null)
                     {
+                        Estado estado = await App.DataBase.ObtieneEstados(registroexitoso.Estado.id_estado);
+                        Municipio municipio = await App.DataBase.ObtieneMunicipio(registroexitoso.Municipio.id_municipio);
+                        Colonia colonia = await App.DataBase.ObtieneColonias(registroexitoso.Colonia.id_colonia);
+                        Direccion direccion = await App.DataBase.ObtieneDirecciones(registroexitoso.Direccion.id_direccion);
+                        Escolaridad escolaridad = await App.DataBase.ObtieneEscolaridad(registroexitoso.Escolaridad.id_escolaridad);
+                        EstadoCivil estadoCivil = await App.DataBase.ObtieneEstadoCivil(registroexitoso.EstadoCivil.id_estado_civil);
+                        Necesidad necesidad = await App.DataBase.ObtieneNecesidades(registroexitoso.Necesidad.id_necesidad);
+
+                        if(estado == null)
+                        {
+                            await App.DataBase.GuardaEstado(registroexitoso.Estado);
+                        }
+
+                        if (municipio == null)
+                        {
+                            await App.DataBase.GuardaMunicipio(registroexitoso.Municipio);
+                        }
+
+                        if (colonia == null)
+                        {
+                            await App.DataBase.GuardaColonia(registroexitoso.Colonia);
+                        }
+
+                        if (direccion == null)
+                        {
+                            await App.DataBase.GuardaDireccion(registroexitoso.Direccion);
+                        }
+
+                        if (escolaridad == null)
+                        {
+                            await App.DataBase.GuardaEscolaridad(registroexitoso.Escolaridad);
+                        }
+
+                        if (estadoCivil == null)
+                        {
+                            await App.DataBase.GuardaEstadoCivil(registroexitoso.EstadoCivil);
+                        }
+
+                        if (necesidad == null)
+                        {
+                            await App.DataBase.GuardaNecesidad(registroexitoso.Necesidad);
+                        }
+
                         await Utilidades.ShowMessage("Notificación", "Su registro fue exitoso", "Aceptar", async () =>
                         {
                             limpiFormulario();
                         });
                     }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Error", "Ocurrio un error por favor intente mas tarde.", "Aceptar");
+                    }
                 } 
                 catch (Exception ex)
                 {
-                    await App.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
+                    await Application.Current.MainPage.DisplayAlert("Error", ex.Message, "Aceptar");
                 }
 
             }
@@ -1402,17 +1490,6 @@ namespace CreeGuanajuatoMovil.ViewModels
                 {
                     ErrorEmailVisible = false;
                 }
-            }
-
-            if (registro.numero_hijos == 0)
-            {
-                ErrorHijosVisible = true;
-                ErrorHijosMensaje = "Por favor ingrese su número de hijos";
-                success = false;
-            }
-            else
-            {
-                ErrorHijosVisible = false;
             }
 
             if (string.IsNullOrEmpty(sEstado))
@@ -1587,6 +1664,7 @@ namespace CreeGuanajuatoMovil.ViewModels
             sNecesidad = string.Empty;
             NecesidadSeleccionado = new Necesidad();
             Etapa = 0;
+            IsBusy = false;
         }
     
         public async void ObtieneUbicacion()
@@ -1657,6 +1735,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                     if (!string.IsNullOrEmpty(stMunicipio))
                         await buscaMunicipio(stMunicipio);
 
+                    ColoniaSeleccionado = new Colonia();
                     if (!string.IsNullOrEmpty(stColonia))
                         await buscaColonia(stColonia);
 
@@ -1673,6 +1752,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                         }
                     }
 
+                    DireccionSeleccionado = new Direccion();
                     if (!string.IsNullOrEmpty(stCalle))
                     {
                         if (DireccionSeleccionado != null)

@@ -14,6 +14,7 @@
     <None Remove="Images\profile.png" />
     <None Remove="Images\pin.png" />
     <None Remove="Images\logo_color.png" />
+    <None Remove="Images\hr.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,6 +22,7 @@
     <EmbeddedResource Include="Images\profile.png" />
     <EmbeddedResource Include="Images\pin.png" />
     <EmbeddedResource Include="Images\logo_color.png" />
+    <EmbeddedResource Include="Images\hr.png" />
   </ItemGroup>
 
   <ItemGroup>

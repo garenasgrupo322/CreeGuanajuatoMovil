@@ -23,19 +23,29 @@ namespace CreeGuanajuatoMovil
             ///Implementamos la intancia para el consumo de ws
             oServiceManager = new Services.ServiceManager(new Services.RestService());
 
-            Settings.NameUserLogin = "Gad Arenas";
-
             if (Settings.IsLoggedIn)
             {
-                MainPage = new MasterDetailPage()
+                TimeSpan ts = DateTime.Now - Settings.IsDateLogin;
+
+                if (ts.Days > 0) {
+                    Settings.AccessToken = string.Empty;
+                    Settings.NameUserLogin = string.Empty;
+                    Settings.AccessTokenType = string.Empty;
+                    Settings.IsLoggedIn = false;
+                    MainPage = new NavigationPage(new InicioSesionPage());
+                }
+                else
                 {
-                    Master = new MasterPage() { Title = "Main Page" },
-                    Detail = new NavigationPage(new RegistroPage())
+                    MainPage = new MasterDetailPage()
                     {
-                        BarBackgroundColor = Color.White,
-                        BarTextColor = Color.Gray
-                    }
-                };
+                        Master = new MasterPage() { Title = "Main Page" },
+                        Detail = new NavigationPage(new RegistroPage())
+                        {
+                            BarBackgroundColor = Color.White,
+                            BarTextColor = Color.Gray
+                        }
+                    };
+                }
             }
             else {
                 MainPage = new NavigationPage(new InicioSesionPage());
