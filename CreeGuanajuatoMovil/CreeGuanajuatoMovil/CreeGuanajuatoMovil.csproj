@@ -11,18 +11,25 @@
 
   <ItemGroup>
     <None Remove="Images\code_qr.png" />
-    <None Remove="Images\profile.png" />
     <None Remove="Images\pin.png" />
     <None Remove="Images\logo_color.png" />
     <None Remove="Images\hr.png" />
+    <None Remove="Images\hr_dw.png" />
+    <None Remove="Images\hr_up.png" />
+    <None Remove="Images\logo.png" />
+    <None Remove="Images\Entry.png" />
+    <None Remove="Images\profile.png" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\code_qr.png" />
-    <EmbeddedResource Include="Images\profile.png" />
     <EmbeddedResource Include="Images\pin.png" />
     <EmbeddedResource Include="Images\logo_color.png" />
-    <EmbeddedResource Include="Images\hr.png" />
+    <EmbeddedResource Include="Images\hr_dw.png" />
+    <EmbeddedResource Include="Images\hr_up.png" />
+    <EmbeddedResource Include="Images\logo.png" />
+    <EmbeddedResource Include="Images\Entry.png" />
+    <EmbeddedResource Include="Images\profile.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +46,8 @@
     <PackageReference Include="ZXing.Net.Mobile.Forms" Version="2.4.1" />
     <PackageReference Include="Xam.Plugin.Geolocator" Version="4.5.0.6" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.0.1" />
+    <PackageReference Include="Xam.Plugin.Media" Version="4.0.1.5" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,5 +77,9 @@
     <Reference Include="Mono.Android">
       <HintPath>..\..\..\..\..\..\..\..\Library\Frameworks\Xamarin.Android.framework\Versions\9.1.8-0\lib\xamarin.android\xbuild-frameworks\MonoAndroid\v8.1\Mono.Android.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Custom\" />
+    <Folder Include="Custom\Controls\" />
   </ItemGroup>
 </Project>

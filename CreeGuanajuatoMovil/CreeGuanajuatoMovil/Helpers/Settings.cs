@@ -42,6 +42,9 @@ namespace CreeGuanajuatoMovil.Helpers
 
         private const string DateLogin = "DateLogin";
         private static readonly DateTime DateLoginDefault = DateTime.Now;
+
+        private const string UserImageProfilerKey = "UserImageProfilerKey";
+        private static readonly string UserImageProfilerDefault = string.Empty;
         #endregion
 
 
@@ -61,6 +64,12 @@ namespace CreeGuanajuatoMovil.Helpers
         {
             get { return AppSettings.GetValueOrDefault(IsLoggedInTokenKey, IsLoggedInTokenDefault); }
             set { AppSettings.AddOrUpdateValue(IsLoggedInTokenKey, value); }
+        }
+
+        public static string UserImageProfiler
+        {
+            get { return AppSettings.GetValueOrDefault(UserImageProfilerKey, UserImageProfilerDefault); }
+            set { AppSettings.AddOrUpdateValue(UserImageProfilerKey, value); }
         }
 
         public static DateTime IsDateLogin

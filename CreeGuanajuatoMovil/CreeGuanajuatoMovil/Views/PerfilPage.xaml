@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="CreeGuanajuatoMovil.Views.PerfilPage"
+             xmlns:controls="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             Title="PERFIL">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Margin="20">
+                        <StackLayout HorizontalOptions="Center" WidthRequest="150" HeightRequest="150">
+                            <controls:CircleImage BorderColor="White" BorderThickness="2" Source="{Binding imageProfiler}" 
+                                              Aspect="AspectFill" WidthRequest="150" HeightRequest="150"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout HorizontalOptions="Center">
+                        <Button Text="Cambiar Foto" CornerRadius="10" TextColor="White" BackgroundColor="#285B81" 
+                                FontSize="18" HorizontalOptions="Center" Command="{Binding ImageProfilerCommand}"/>
+                    </StackLayout>
+                </StackLayout>
+                <StackLayout>
+                    <ListView HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" 
+                              ItemsSource="{Binding PerfilSource}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text="{Binding titulo}" Detail="{Binding descripcion}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

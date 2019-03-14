@@ -11,8 +11,12 @@ namespace CreeGuanajuatoMovil.Models
 
         public string token { get; set; }
 
-        public string rol { get; set; }
+        public string roles { get; set; }
 
         public string message { get; set; }
+
+        public string url { get; set; }
+
+        public string Email { get; set; }
     }
 }

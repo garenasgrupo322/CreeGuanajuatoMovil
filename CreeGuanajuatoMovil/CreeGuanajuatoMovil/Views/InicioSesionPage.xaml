@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="CreeGuanajuatoMovil.Views.InicioSesionPage" NavigationPage.HasNavigationBar="false">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="CreeGuanajuatoMovil.Views.InicioSesionPage" 
+             NavigationPage.HasNavigationBar="false">
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout Orientation="Vertical" BackgroundColor="#E6E6E6">
+        <ScrollView BackgroundColor="#E6E6E6">
+            <StackLayout Orientation="Vertical">
                 <StackLayout Orientation="Vertical">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition />
                         </Grid.RowDefinitions>
-                        <StackLayout Orientation="Vertical" Grid.Row="0">
-                            <StackLayout Orientation="Vertical" BackgroundColor="White">
-                                <StackLayout Margin="30,10,30,10">
-                                    <Image Source="{Binding imageSorceLogo}" Aspect="AspectFit" Margin="10" HeightRequest="150" WidthRequest="150" VerticalOptions="Center" HorizontalOptions="Center" />
-                                </StackLayout>
-                                <StackLayout Orientation="Vertical" Margin="30,0,30,0">
-                                    <Entry Text="{Binding sUsuario, Mode=TwoWay}" x:Name="EmailEntry" TextColor="Gray" Placeholder="Ingrese su usuario" PlaceholderColor="Gray" Keyboard="Email" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White" />
-                                    <Label Text="{Binding ErrorUsuarioMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorUsuarioVisible, Mode=OneWay}" />
-                                </StackLayout>
-                                <StackLayout Orientation="Vertical" Margin="30,0,30,0">
-                                    <Entry Text="{Binding sContrasena, Mode=TwoWay}" x:Name="PasswordEntry" TextColor="Gray" Placeholder="Ingrese su contraseña" PlaceholderColor="Gray" IsPassword="True" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White" />
-                                    <Label Text="{Binding ErrorContraMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorContraVisible, Mode=OneWay}" />
-                                </StackLayout>
+                        <StackLayout Orientation="Vertical" Grid.Row="0" BackgroundColor="White">
+                            <StackLayout Margin="30,5,30,5">
+                                <Image Source="{Binding imageSorceLogo}" Aspect="AspectFit" Margin="5" HeightRequest="150" WidthRequest="150" 
+                                       VerticalOptions="Center" HorizontalOptions="Center" />
                             </StackLayout>
-                            <StackLayout Orientation="Vertical" Margin="30">
+                            <StackLayout Orientation="Vertical" Margin="30,0,30,0">
+                                <StackLayout>
+                                    <Entry Text="{Binding sUsuario, Mode=TwoWay}" x:Name="EmailEntry" TextColor="Gray" Placeholder="Ingrese su usuario" PlaceholderColor="Gray" 
+                                       Keyboard="Email" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White"/>
+                                </StackLayout>
+                                <Label Text="{Binding ErrorUsuarioMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorUsuarioVisible, Mode=OneWay}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" Margin="30,0,30,30">
+                                <Entry Text="{Binding sContrasena, Mode=TwoWay}" x:Name="PasswordEntry" TextColor="Gray" Placeholder="Ingrese su contraseña" 
+                                       PlaceholderColor="Gray" IsPassword="True" FontSize="18" HorizontalTextAlignment="Start" BackgroundColor="White" />
+                                <Label Text="{Binding ErrorContraMensaje, Mode=OneWay}" TextColor="Gold" IsVisible="{Binding ErrorContraVisible, Mode=OneWay}" />
+                            </StackLayout>
+                        </StackLayout>
+                        <Image Source="{Binding imageHR}" VerticalOptions="End" Grid.Row="0" />
+                        <StackLayout Orientation="Vertical" Grid.Row="1">
+                            <StackLayout Margin="30">
                                 <StackLayout>
                                     <Label Text="{Binding Message, Mode=OneWay}" TextColor="Gold" />
                                 </StackLayout>
                                 <StackLayout>
-                                    <Button Text="Iniciar sesión" Command="{Binding IniciaSesion}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
+                                    <Button Text="Iniciar sesión" Command="{Binding IniciaSesion}" CornerRadius="10" TextColor="White" BackgroundColor="#285B81" FontSize="18" />
                                 </StackLayout>
-                                <StackLayout>
-                                    <Button Text="¿Olvidaste tu Contraseña?" FontSize="15" BackgroundColor="Transparent" />
-                                </StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <StackLayout HorizontalOptions="Start">
-                                        <Image Source="{Binding iconQR}" HeightRequest="30" WidthRequest="30" />
+                                <StackLayout Orientation="Horizontal" Margin="30,30,0,0">
+                                    <StackLayout HorizontalOptions="Center">
+                                        <Image Source="{Binding iconQR}" HeightRequest="40" WidthRequest="40" />
                                     </StackLayout>
-                                    <StackLayout HorizontalOptions="Start">
+                                    <StackLayout HorizontalOptions="Center">
                                         <Button Text="Escanear QR" FontSize="15" BackgroundColor="Transparent" Command="{Binding IniciaSesionQR}" />
                                     </StackLayout>
                                 </StackLayout>
+                                <StackLayout Orientation="Vertical" Margin="10">
+                                    <Button Text="Legales" FontSize="15" BackgroundColor="Transparent" Command="{Binding legalesCommand}" 
+                                            HorizontalOptions="Center"/>
+                                </StackLayout>
                             </StackLayout>
                         </StackLayout>
-                        <ActivityIndicator Color="#2E64FE" IsRunning="{Binding IsBusy }" Grid.Row="0" HeightRequest="200" />
+                        <ActivityIndicator Color="#2E64FE" IsRunning="{Binding IsBusy }" IsVisible="{Binding IsBusy }" Grid.Row="0" HeightRequest="200" />
                     </Grid>
                 </StackLayout>
             </StackLayout>

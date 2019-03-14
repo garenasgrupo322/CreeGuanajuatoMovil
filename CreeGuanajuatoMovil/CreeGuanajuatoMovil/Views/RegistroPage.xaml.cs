@@ -59,6 +59,11 @@ namespace CreeGuanajuatoMovil.Views
             viewModel.focusEnry("Necesidad");
         }
 
+        void Handle_Focused(object sender, Xamarin.Forms.FocusEventArgs e)
+        {
+            viewModel.focusEnry("Seccion");
+        }
+
         #endregion
 
         void Handle_Unfocused(object sender, Xamarin.Forms.FocusEventArgs e)

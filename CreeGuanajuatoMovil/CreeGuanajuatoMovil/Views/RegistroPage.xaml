@@ -3,7 +3,7 @@
              xmlns:iconize="clr-namespace:Plugin.Iconize;assembly=Plugin.Iconize" x:Class="CreeGuanajuatoMovil.Views.RegistroPage" 
              x:Name="CrearRegistro" Title="NUEVO REGISTRO">
     <ContentPage.ToolbarItems>
-        <iconize:IconToolbarItem Order="Primary" Icon="profile.png">
+        <iconize:IconToolbarItem Order="Primary" Icon="{Binding imageProfiler}">
         </iconize:IconToolbarItem>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
@@ -165,7 +165,8 @@
                             <Label Text="{Binding ErrorEstadoCivildMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorEstadoCivilVisible, Mode=OneWay}" />
                         </StackLayout>
                         <StackLayout IsVisible="{Binding IsVisibleEstadoCivil}">
-                            <ListView ItemsSource="{Binding EstadoCiviles}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding EstadoCivilSeleccionado, Mode=TwoWay}">
+                            <ListView ItemsSource="{Binding EstadoCiviles}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                                      SelectedItem="{Binding EstadoCivilSeleccionado, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextCell Text="{Binding nombre}" />
@@ -174,11 +175,14 @@
                             </ListView>
                         </StackLayout>
                         <StackLayout>
-                            <Entry x:Name="Necesidad" Placeholder="Ingrese su necesidad" HorizontalTextAlignment="Start" Text="{Binding sNecesidad, Mode=TwoWay}" Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference INE}" Focused="Handle_FocusedNecesidad" Unfocused="Handle_Unfocused" />
+                            <Entry x:Name="Necesidad" Placeholder="Ingrese su necesidad" HorizontalTextAlignment="Start" Text="{Binding sNecesidad, Mode=TwoWay}" 
+                                   Keyboard="Text" ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference Seccion}" Focused="Handle_FocusedNecesidad" 
+                                   Unfocused="Handle_Unfocused" />
                             <Label Text="{Binding ErrorNecesidadMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorNecesidadVisible, Mode=OneWay}" />
                         </StackLayout>
                         <StackLayout IsVisible="{Binding IsVisibleNecesidad}">
-                            <ListView ItemsSource="{Binding Necesidades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" SelectedItem="{Binding NecesidadSeleccionado, Mode=TwoWay}">
+                            <ListView ItemsSource="{Binding Necesidades}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                                      SelectedItem="{Binding NecesidadSeleccionado, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <TextCell Text="{Binding descripcion}" />
@@ -187,11 +191,37 @@
                             </ListView>
                         </StackLayout>
                         <StackLayout>
-                            <Entry x:Name="INE" Placeholder="Ingrese INE/IFE" HorizontalTextAlignment="Start" Text="{Binding registro.INE}" Keyboard="{Binding keyboard}" Unfocused="Handle_Unfocused" />
+                            <Entry x:Name="Seccion" Placeholder="Ingrese su sección" HorizontalTextAlignment="Start" Text="{Binding sSeccion, Mode=TwoWay}" Keyboard="Text" 
+                                   ReturnCommand="{Binding SiguienteEntryCommand}" ReturnCommandParameter="{x:Reference INE}" Focused="Handle_Focused" Unfocused="Handle_Unfocused" />
+                            <Label Text="{Binding ErrorSeccionMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorSeccionVisible, Mode=OneWay}" />
+                        </StackLayout>
+                        <StackLayout IsVisible="{Binding IsVisibleSeccion}">
+                            <ListView ItemsSource="{Binding Seccions}" HeightRequest="200" BackgroundColor="Silver" SeparatorVisibility="Default" SelectionMode="Single" 
+                                      SelectedItem="{Binding SeccionSeleccionado, Mode=TwoWay}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextCell Text="{Binding nombre}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </StackLayout>
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout HorizontalOptions="FillAndExpand">
+                                    <Entry x:Name="INE" Placeholder="Ingrese INE/IFE" HorizontalTextAlignment="Start" Text="{Binding strINE, Mode=TwoWay}" Keyboard="{Binding keyboard}" Unfocused="Handle_Unfocused" />
+                                </StackLayout>
+                                <StackLayout HorizontalOptions="End">
+                                    <Image Source="{Binding iconQR}" HeightRequest="40" WidthRequest="40">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ReadCode}" />
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </StackLayout>
+                            </StackLayout>
                             <Label Text="{Binding ErrorIneMensaje, Mode=OneWay}" TextColor="Red" IsVisible="{Binding ErrorIneVisible, Mode=OneWay}" />
                         </StackLayout>
                         <StackLayout Grid.Row="16">
-                            <Button Text="Guardar Registro" Command="{Binding GuardaRegistroCommand}" CornerRadius="50" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
+                            <Button Text="Guardar Registro" Command="{Binding GuardaRegistroCommand}" CornerRadius="10" TextColor="White" BackgroundColor="#285B81" FontSize="18"/>
                         </StackLayout>
                     </StackLayout>
                 </Grid>

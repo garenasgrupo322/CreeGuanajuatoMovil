@@ -38,7 +38,7 @@ namespace CreeGuanajuatoMovil
                 {
                     MainPage = new MasterDetailPage()
                     {
-                        Master = new MasterPage() { Title = "Main Page" },
+                        Master = new MasterPage() { Title = "Menú" },
                         Detail = new NavigationPage(new RegistroPage())
                         {
                             BarBackgroundColor = Color.White,

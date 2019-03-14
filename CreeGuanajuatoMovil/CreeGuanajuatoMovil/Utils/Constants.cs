@@ -12,7 +12,7 @@ namespace CreeGuanajuatoMovil.Utils
         /// <summary>
         /// Url base para los servicios rest full
         /// </summary>
-        public static string RestUrl = "https://garenas-developer.azurewebsites.net/api/";
+        public static string RestUrl = "https://creeguanajuatoapi.azurewebsites.net/api/";
 
         /// <summary>
         /// Variable que define si la aplicación llama a los servicios en desarrollo o producción

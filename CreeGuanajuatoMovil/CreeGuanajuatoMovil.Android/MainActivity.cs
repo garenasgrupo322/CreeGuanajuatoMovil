@@ -1,14 +1,6 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
-using Xfx;
-using Plugin.Permissions;
-using Plugin.CurrentActivity;
 
 namespace CreeGuanajuatoMovil.Droid
 {
@@ -22,7 +14,9 @@ namespace CreeGuanajuatoMovil.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            global::ZXing.Net.Mobile.Forms.Android.Platform.Init();
             Xamarin.FormsGoogleMaps.Init(this, savedInstanceState);
+            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, savedInstanceState);
             LoadApplication(new App());
         }

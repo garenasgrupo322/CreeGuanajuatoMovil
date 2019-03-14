@@ -52,12 +52,26 @@ namespace CreeGuanajuatoMovil.Services
             return restService.ObtieneEstadoCivilAsync();
         }
 
+        public Task<List<Seccion>> ObtieneSeccionales()
+        {
+            return restService.ObtieneSeccionales();
+        }
+
+        public Task<string> ObtieneLegales()
+        {
+            return restService.ObtieneLegales();
+        }
+
         public Task<List<Usuario>> ObtieneUsuario()
         {
             return restService.ObtieneUsuario();
         }
-
         #endregion
+
+        public Task<Usuario> ObtieneUsuarioPerfil()
+        {
+            return restService.ObtieneUsuarioPerfil();
+        }
 
         public Task<Registro> GuardaRegistroAsync(Registro registro)
         {
@@ -74,10 +88,19 @@ namespace CreeGuanajuatoMovil.Services
             return restService.ObtieneUbicacion(lat, lng);
         }
 
-        public Task<Usuario> IniciarSesion(string usuario, string contrasena)
+        public Task<string> IniciarSesion(string usuario, string contrasena)
         {
             return restService.IniciarSesion(usuario, contrasena);
         }
 
+        public Task<bool> IniciarSesionToken()
+        {
+            return restService.IniciarSesionToken();
+        }
+
+        public Task setImageProfiler(string imageBase64)
+        {
+            return restService.setImageProfiler(imageBase64);
+        }
     }
 }

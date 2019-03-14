@@ -33,6 +33,8 @@ namespace CreeGuanajuatoMovil.Models
 
         public Necesidad Necesidad { get; set; }
 
+        public Seccion Seccion { get; set; }    
+
         public double longitud { get; set; }
 
         public double latitud { get; set; }

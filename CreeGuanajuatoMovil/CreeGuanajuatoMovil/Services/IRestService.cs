@@ -16,8 +16,12 @@ namespace CreeGuanajuatoMovil.Services
         Task<List<Necesidad>> ObtieneNecesidades();
         Task<List<Escolaridad>> ObtieneEscolaridadAsync();
         Task<List<EstadoCivil>> ObtieneEstadoCivilAsync();
+        Task<List<Seccion>> ObtieneSeccionales();
+        Task<string> ObtieneLegales();
         Task<List<Usuario>> ObtieneUsuario();
         #endregion
+
+        Task<Usuario> ObtieneUsuarioPerfil();
 
         Task<Registro> GuardaRegistroAsync(Registro registro);
 
@@ -25,6 +29,10 @@ namespace CreeGuanajuatoMovil.Services
 
         Task<GoogleAPI> ObtieneUbicacion(double lat, double lng);
 
-        Task<Usuario> IniciarSesion(string usuario, string contrasena);
+        Task<string> IniciarSesion(string usuario, string contrasena);
+
+        Task<bool> IniciarSesionToken();
+
+        Task setImageProfiler(string imageBase64);
     }
 }

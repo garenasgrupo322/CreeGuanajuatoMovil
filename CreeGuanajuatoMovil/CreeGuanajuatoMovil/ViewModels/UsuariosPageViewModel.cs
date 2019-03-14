@@ -31,7 +31,7 @@ namespace CreeGuanajuatoMovil.ViewModels
             {
                 Items items = new Items();
                 items.Nombre = item.nombre + " " + item.apellido_paterno + " " + item.apellido_materno;
-                items.Rol = item.rol;
+                items.Rol = item.roles;
 
                 UsuarioItemSource.Add(items);
             }

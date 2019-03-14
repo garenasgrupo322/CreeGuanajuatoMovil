@@ -5,25 +5,33 @@
              xmlns:local="clr-namespace:CreeGuanajuatoMovil.Views"
              x:Class="CreeGuanajuatoMovil.Views.MasterPage">
     <ContentPage.Content>
-        <Grid BackgroundColor="Transparent">
+        <ScrollView>
+            <Grid BackgroundColor="Transparent">
             <Grid.RowDefinitions>
                 <RowDefinition Height="200" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid BackgroundColor="Gray">
                 <Image Source="bg.png" Aspect="AspectFill" />
-                <StackLayout Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-                    <controls:CircleImage BorderColor="White" BorderThickness="2" Source="profile.png" Aspect="AspectFill" WidthRequest="85" HeightRequest="85" />
+                <StackLayout Padding="0,20,0,0" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" Orientation="Vertical">
+                    <StackLayout WidthRequest="90" HeightRequest="90" HorizontalOptions="Center">
+                        <controls:CircleImage BorderColor="White" BorderThickness="2" Source="{Binding imageProfiler}" Aspect="AspectFill" 
+                                              HeightRequest="90" WidthRequest="90"/>
+                    </StackLayout>
                     <Label Text="{Binding NombreUsuario}" TextColor="White" FontSize="Large" />
                 </StackLayout>
             </Grid>
             <StackLayout Margin="20,20,20,0" Grid.Row="1" Spacing="15">
-                <local:NavigationItem Text="Captura Beneficiario" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="1" Margin="10"/>
-                <local:NavigationItem Text="Reportes" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="2" Margin="10"/>
-                <local:NavigationItem Text="Usuarios" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="3" Margin="10" IsVisible="{Binding IsUsuarioVisible}"/>
+                <local:NavigationItem Text="PERFIL" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="5" Margin="10"/>
+                <local:NavigationItem Text="NUEVO BENEFICIARIO" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="1" Margin="10"/>
+                <local:NavigationItem Text="CONSULTA" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="2" Margin="10"/>
+                <local:NavigationItem Text="USUARIOS" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="3" Margin="10" IsVisible="{Binding IsUsuarioVisible}"/>
                 <ContentView HeightRequest="1" BackgroundColor="Gray" />
-                <local:NavigationItem Text="Salir" Icon="fa-cog" Command="{Binding NavigationCommand}" CommandParameter="100" />
+                <local:NavigationItem Text="LEGALES" Icon="fa-archive" Command="{Binding NavigationCommand}" CommandParameter="4" Margin="10"/>
+                <ContentView HeightRequest="1" BackgroundColor="Gray" />
+                <local:NavigationItem Text="SALIR" Icon="fa-cog" Command="{Binding NavigationCommand}" CommandParameter="100" />
             </StackLayout>
         </Grid>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

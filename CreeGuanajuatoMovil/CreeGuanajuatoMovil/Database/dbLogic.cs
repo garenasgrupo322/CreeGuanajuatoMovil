@@ -33,6 +33,7 @@ namespace CreeGuanajuatoMovil.Database
             database.CreateTableAsync<Necesidad>().Wait();
             database.CreateTableAsync<Escolaridad>().Wait();
             database.CreateTableAsync<EstadoCivil>().Wait();
+            database.CreateTableAsync<Seccion>().Wait();
         }
 
         /// <summary>
@@ -46,6 +47,7 @@ namespace CreeGuanajuatoMovil.Database
             database.ExecuteAsync("DELETE FROM Necesidad");
             database.ExecuteAsync("DELETE FROM Escolaridad");
             database.ExecuteAsync("DELETE FROM EstadoCivil");
+            database.ExecuteAsync("DELETE FROM Seccion");
         }
 
         #region "Estado"
@@ -644,6 +646,89 @@ namespace CreeGuanajuatoMovil.Database
         public Task<int> EliminaEstadoCivil(EstadoCivil estadoCivil)
         {
             return database.DeleteAsync(estadoCivil);
+        }
+
+        #endregion
+
+        #region "Seccion"
+
+        /// <summary>
+        /// Guardas the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="seccion">Seccion.</param>
+        public Task<int> GuardaSeccion(Seccion seccion)
+        {
+            return database.InsertAsync(seccion);
+        }
+
+        /// <summary>
+        /// Guardas the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="seccions">Seccions.</param>
+        public async Task GuardaSeccion(List<Seccion> seccions)
+        {
+            try
+            {
+                foreach (Seccion item in seccions)
+                {
+                    await database.InsertAsync(item);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Obtienes the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        public Task<List<Seccion>> ObtieneSeccion()
+        {
+            return database.Table<Seccion>().ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtienes the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="busqueda">Busqueda.</param>
+        public Task<List<Seccion>> ObtieneSeccion(string busqueda)
+        {
+            return database.Table<Seccion>().Where(i => i.nombre.Contains(busqueda)).ToListAsync();
+        }
+
+        /// <summary>
+        /// Obtienes the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="id_seccion">Identifier seccion.</param>
+        public Task<Seccion> ObtieneSeccion(int id_seccion)
+        {
+            return database.Table<Seccion>().Where(i => i.id_seccion == id_seccion).FirstOrDefaultAsync();
+        }
+
+        /// <summary>
+        /// Modificas the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="seccion">Seccion.</param>
+        public Task<int> ModificaSeccion(Seccion seccion)
+        {
+            return database.UpdateAsync(seccion);
+        }
+
+        /// <summary>
+        /// Eliminas the seccion.
+        /// </summary>
+        /// <returns>The seccion.</returns>
+        /// <param name="seccion">Seccion.</param>
+        public Task<int> EliminaSeccion(Seccion seccion)
+        {
+            return database.DeleteAsync(seccion);
         }
 
         #endregion

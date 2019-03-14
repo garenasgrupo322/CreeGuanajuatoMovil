@@ -19,11 +19,6 @@ namespace CreeGuanajuatoMovil.Services
         public RestService()
         {
             client = new HttpClient();
-            client.DefaultRequestHeaders
-                    .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
-            client.DefaultRequestHeaders
-              .Accept
-              .Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         #region catálogos   
@@ -38,6 +33,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Estados");
                 response = await client.GetAsync(uri);
@@ -66,6 +68,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Municipios");
                 response = await client.GetAsync(uri);
@@ -94,6 +103,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Colonias");
                 response = await client.GetAsync(uri);
@@ -122,6 +138,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Direcciones");
                 response = await client.GetAsync(uri);
@@ -150,6 +173,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Necesidades");
                 response = await client.GetAsync(uri);
@@ -178,6 +208,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "Escolaridades");
                 response = await client.GetAsync(uri);
@@ -206,6 +243,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
                 var uri = new Uri(Constants.RestUrl + "EstadoCiviles");
                 response = await client.GetAsync(uri);
@@ -224,8 +268,67 @@ namespace CreeGuanajuatoMovil.Services
             return estadoCivils;
         }
 
+        public async Task<List<Seccion>> ObtieneSeccionales()
+        {
+            List<Seccion> seccions = new List<Seccion>();
 
+            try
+            {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Seccionales");
+                response = await client.GetAsync(uri);
 
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    seccions = JsonConvert.DeserializeObject<List<Seccion>>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return seccions;
+        }
+
+        public async Task<List<Usuario>> ObtieneUsuario()
+        {
+            List<Usuario> usuarios = new List<Usuario>();
+
+            try
+            {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Users");
+                response = await client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return usuarios;
+        }
         #endregion
 
         public async Task<Registro> GuardaRegistroAsync(Registro registro)
@@ -234,6 +337,13 @@ namespace CreeGuanajuatoMovil.Services
             Registro result = new Registro();
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var postDriver = JsonConvert.SerializeObject(registro);
                 var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
@@ -258,6 +368,13 @@ namespace CreeGuanajuatoMovil.Services
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 var uri = new Uri(Constants.RestUrl + "Registroes/GetReport");
                 var postDriver = JsonConvert.SerializeObject(new {
@@ -321,13 +438,25 @@ namespace CreeGuanajuatoMovil.Services
             return registros;
         }
 
-        public async Task<Usuario> IniciarSesion(string usuario, string contrasena)
+        public class loginResult
         {
-            var uri = new Uri(Constants.RestUrl + "Users/authenticate");
+            public string response { get; set; }
+        }
 
-            Usuario result = new Usuario();
+        public async Task<string> IniciarSesion(string usuario, string contrasena)
+        {
+            var uri = new Uri(Constants.RestUrl + "Auth/Login");
+
+            loginResult result = new loginResult();
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 var postDriver = JsonConvert.SerializeObject(new
                 {
                     username = usuario,
@@ -340,30 +469,64 @@ namespace CreeGuanajuatoMovil.Services
                 response = await client.PostAsync(uri, content);    
 
                 var request = await response.Content.ReadAsStringAsync();
-                result = JsonConvert.DeserializeObject<Usuario>(request);
+                result = JsonConvert.DeserializeObject<loginResult>(request);
             }
             catch (Exception ex)
             {
                 Debug.WriteLine(@"ERROR {0}", ex.Message);
             }
 
-            return result;
+            return result.response;
         }
 
-        public async Task<List<Usuario>> ObtieneUsuario()
+        public async Task<bool> IniciarSesionToken()
         {
-            List<Usuario> usuarios = new List<Usuario>();
+            bool estatus = false;
+            var uri = new Uri(Constants.RestUrl + "Auth/LoginToken");
 
             try
             {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 HttpResponseMessage response = null;
-                var uri = new Uri(Constants.RestUrl + "Users");
+                response = await client.GetAsync(uri);
+
+                estatus = response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return estatus;
+        }
+
+        public async Task<Usuario> ObtieneUsuarioPerfil()
+        {
+            Usuario usuarios = new Usuario();
+
+            try
+            {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Users/Perfil");
                 response = await client.GetAsync(uri);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var request = await response.Content.ReadAsStringAsync();
-                    usuarios = JsonConvert.DeserializeObject<List<Usuario>>(request);
+                    usuarios = JsonConvert.DeserializeObject<Usuario>(request);
                 }
             }
             catch (Exception ex)
@@ -372,6 +535,72 @@ namespace CreeGuanajuatoMovil.Services
             }
 
             return usuarios;
+        }
+
+        public async Task<string> ObtieneLegales()
+        {
+            string legales = string.Empty;
+
+            try
+            {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                HttpResponseMessage response = null;
+                var uri = new Uri(Constants.RestUrl + "Legales");
+                response = await client.GetAsync(uri);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var request = await response.Content.ReadAsStringAsync();
+                    legales = JsonConvert.DeserializeObject<string>(request);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
+
+            return legales;
+        }
+
+        public async Task setImageProfiler(string imageBase64)
+        {
+            try
+            {
+                client.DefaultRequestHeaders.CacheControl = new CacheControlHeaderValue();
+                client.DefaultRequestHeaders.CacheControl.NoCache = true;
+                client.DefaultRequestHeaders
+                        .Authorization = new AuthenticationHeaderValue("Bearer", Settings.AccessToken);
+                client.DefaultRequestHeaders
+                  .Accept
+                  .Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                var uri = new Uri("https://garenas-developer.azurewebsites.net/Api/Users/setImage");
+
+                var postDriver = JsonConvert.SerializeObject(new
+                {
+                    token = Settings.AccessToken,
+                    image = imageBase64
+                });
+
+                var content = new StringContent(postDriver, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = await client.PostAsync(uri, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(@"ERROR {0}", ex.Message);
+            }
         }
     }
 }

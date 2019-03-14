@@ -1,6 +1,7 @@
 ﻿using CreeGuanajuatoMovil.Models;
 using CreeGuanajuatoMovil.Utils;
 using CreeGuanajuatoMovil.Views;
+using CreeGuanajuatoMovil.Helpers;
 using Plugin.Geolocator;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
@@ -12,6 +13,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using ZXing;
+using ZXing.Mobile;
+using ZXing.Net.Mobile.Forms;
 
 namespace CreeGuanajuatoMovil.ViewModels
 {
@@ -26,7 +30,25 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         public Command GetCurrentLocation { get; set; }
 
+        public Command ReadCode { get; private set; }
+
         public ImageSource imageSorceLocation { get; set; }
+
+        public ImageSource iconQR { get; set; }
+
+        public ImageSource _imageProfiler;
+
+        public ImageSource imageProfiler
+        {
+            get
+            {
+                return _imageProfiler;
+            }
+            set
+            {
+                SetProperty(ref _imageProfiler, value);
+            }
+        }
         #endregion
 
         #region Properties Estado
@@ -354,6 +376,52 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         #endregion
 
+        #region Properties Seccion
+
+        public bool IsSelectedSeccion { get; set; }
+
+        private bool _IsVisibleSeccion;
+        public bool IsVisibleSeccion
+        {
+            get
+            {
+                return _IsVisibleSeccion;
+            }
+            set
+            {
+                SetProperty(ref _IsVisibleSeccion, value);
+            }
+        }
+
+        private string _sSeccion;
+
+        public string sSeccion
+        {
+            get { return _sSeccion; }
+            set
+            {
+                SetProperty(ref _sSeccion, value);
+
+                if (!IsSelectedSeccion)
+                    Task.Run(() => getSeccion(_sSeccion));
+            }
+        }
+
+        private Seccion _SeccionSeleccionado;
+        public Seccion SeccionSeleccionado
+        {
+            get { return _SeccionSeleccionado; }
+            set
+            {
+                SetProperty(ref _SeccionSeleccionado, value);
+                IsSelectedSeccion = true;
+                sSeccion = _SeccionSeleccionado.nombre;
+                ListSeccionClear();
+            }
+        }
+
+        #endregion
+
         #region Properties
         public Task Initialization { get; private set; }
         public ObservableCollection<Estado> Estados { get; set; }
@@ -363,6 +431,7 @@ namespace CreeGuanajuatoMovil.ViewModels
         public ObservableCollection<Escolaridad> Escolaridades { get; set; }
         public ObservableCollection<Necesidad> Necesidades { get; set; }
         public ObservableCollection<EstadoCivil> EstadoCiviles { get; set; }
+        public ObservableCollection<Seccion> Seccions { get; set; }
 
         public Keyboard keyboard { get; set; }
 
@@ -378,6 +447,21 @@ namespace CreeGuanajuatoMovil.ViewModels
                 SetProperty(ref _registro, value);
             }
         }
+
+        private string _strINE;
+
+        public string strINE
+        {
+            get
+            {
+                return _strINE;
+            }
+            set
+            {
+                SetProperty(ref _strINE, value);
+            }
+        }
+
 
         private bool _ErrorNombreVisible;
 
@@ -827,6 +911,34 @@ namespace CreeGuanajuatoMovil.ViewModels
             }
         }
 
+        private bool _ErrorSeccionVisible;
+
+        public bool ErrorSeccionVisible
+        {
+            get
+            {
+                return _ErrorSeccionVisible;
+            }
+            set
+            {
+                SetProperty(ref _ErrorSeccionVisible, value);
+            }
+        }
+
+        private string _ErrorSeccionMensaje;
+
+        public string ErrorSeccionMensaje
+        {
+            get
+            {
+                return _ErrorSeccionMensaje;
+            }
+            set
+            {
+                SetProperty(ref _ErrorSeccionMensaje, value);
+            }
+        }
+
         private bool _PanelUsuario;
 
         public bool PanelUsuario
@@ -921,10 +1033,31 @@ namespace CreeGuanajuatoMovil.ViewModels
 
         public object background { get; set; }
 
+        private string _result;
+        public string Result
+        {
+            get => _result;
+            set
+            {
+                _result = value;
+                OnPropertyChanged(nameof(Result));
+            }
+        }
+
         #endregion
 
         public RegistroPageViewModel() {
             imageSorceLocation = ImageSource.FromResource("CreeGuanajuatoMovil.Images.pin.png");
+            iconQR = ImageSource.FromResource("CreeGuanajuatoMovil.Images.code_qr.png");
+            if (string.IsNullOrEmpty(Settings.UserImageProfiler))
+            {
+                imageProfiler = ImageSource.FromResource("CreeGuanajuatoMovil.Images.profile.png");
+            }
+            else
+            {
+                var uri = new Uri(Settings.UserImageProfiler);
+                imageProfiler = ImageSource.FromUri(uri);
+            }
             Etapa = 0;
 
             Estados = new ObservableCollection<Estado>();
@@ -934,9 +1067,12 @@ namespace CreeGuanajuatoMovil.ViewModels
             Escolaridades = new ObservableCollection<Escolaridad>();
             Necesidades = new ObservableCollection<Necesidad>();
             EstadoCiviles = new ObservableCollection<EstadoCivil>();
+            Seccions = new ObservableCollection<Seccion>();
 
             GuardaRegistroCommand = new Command(GuardaRegistro);
             GetCurrentLocation = new Command(ObtieneUbicacion);
+
+            ReadCode = new Command(OnReadCode);
 
             keyboard = Keyboard.Create(KeyboardFlags.All);
 
@@ -964,6 +1100,51 @@ namespace CreeGuanajuatoMovil.ViewModels
                 }
 
             });
+        }
+
+        private void OnReadCode()
+        {
+            var options = new MobileBarcodeScanningOptions();
+            options.PossibleFormats = new List<BarcodeFormat>
+            {
+                BarcodeFormat.QR_CODE,
+                BarcodeFormat.CODABAR
+            };
+            var page = new ZXingScannerPage(options) { Title = "Escanear" };
+            var closeItem = new ToolbarItem { Text = "Cerrar" };
+
+            closeItem.Clicked += (object sender, EventArgs e) =>
+            {
+                page.IsScanning = false;
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    Navigation.PopAsync();
+                });
+            };
+            page.ToolbarItems.Add(closeItem);
+            page.OnScanResult += (result) =>
+            {
+                page.IsScanning = false;
+
+                Device.BeginInvokeOnMainThread(() => {
+                    Application.Current.MainPage.Navigation.PopModalAsync();
+                    if (string.IsNullOrEmpty(result.Text))
+                    {
+                        Result = "No valid code has been scanned";
+                    }
+                    else
+                    {
+                        Navigation.PopAsync();
+                        string text = result.Text;
+                        text = text.Replace("http://qr.ine.mx/", "");
+                        text = text.Substring(0, 13);
+
+                        strINE = text;
+                    }
+                });
+            };
+
+            Navigation.PushAsync(page);
         }
 
         async Task getEstados(string busqueda) {
@@ -1200,6 +1381,39 @@ namespace CreeGuanajuatoMovil.ViewModels
             }
         }
 
+        async Task getSeccion(string busqueda)
+        {
+            IsVisibleSeccion = false;
+            if (!string.IsNullOrEmpty(busqueda) && busqueda.Length > 2)
+            {
+                var count = Seccions.Count();
+
+                for (int i = 0; i < count; i++)
+                {
+                    Seccions.RemoveAt(0);
+                }
+
+                List<Seccion> secciones = await App.DataBase.ObtieneSeccion(busqueda);
+
+                if (secciones.Count != 0)
+                {
+                    foreach (Seccion item in secciones)
+                    {
+                        Seccions.Add(item);
+                    }
+                    IsVisibleSeccion = true;
+                }
+                else
+                {
+                    ListSeccionClear();
+                }
+            }
+            else
+            {
+                ListSeccionClear();
+            }
+        }
+
         void ListEstadoClear()
         {
             IsVisibleEstado = false;
@@ -1234,7 +1448,12 @@ namespace CreeGuanajuatoMovil.ViewModels
         {
             IsVisibleEstadoCivil = false;
         }
-    
+
+        void ListSeccionClear()
+        {
+            IsVisibleSeccion = false;
+        }
+
         async void GuardaRegistro()
         {
             if (valida())
@@ -1247,6 +1466,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                 Escolaridad escola = new Escolaridad();
                 EstadoCivil edoCivil = new EstadoCivil();
                 Necesidad nec = new Necesidad();
+                Seccion secc = new Seccion();
 
                 if (EstadoSeleccionado == null)
                 {
@@ -1345,6 +1565,21 @@ namespace CreeGuanajuatoMovil.ViewModels
                     }
                 }
 
+                if (SeccionSeleccionado == null) {
+                    secc.nombre = sSeccion;
+                }
+                else
+                {
+                    if(SeccionSeleccionado.nombre != sSeccion)
+                    {
+                        secc.nombre = sSeccion;
+                    }
+                    else
+                    {
+                        secc = SeccionSeleccionado;
+                    }
+                }
+
                 registro.Estado = edo;
                 registro.Municipio = mun;
                 registro.Colonia = col;
@@ -1352,6 +1587,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                 registro.Escolaridad = escola;
                 registro.EstadoCivil = edoCivil;
                 registro.Necesidad = nec;
+                registro.Seccion = secc;
 
                 try
                 {
@@ -1366,8 +1602,9 @@ namespace CreeGuanajuatoMovil.ViewModels
                         Escolaridad escolaridad = await App.DataBase.ObtieneEscolaridad(registroexitoso.Escolaridad.id_escolaridad);
                         EstadoCivil estadoCivil = await App.DataBase.ObtieneEstadoCivil(registroexitoso.EstadoCivil.id_estado_civil);
                         Necesidad necesidad = await App.DataBase.ObtieneNecesidades(registroexitoso.Necesidad.id_necesidad);
+                        Seccion seccion = await App.DataBase.ObtieneSeccion(registro.Seccion.id_seccion);
 
-                        if(estado == null)
+                        if (estado == null)
                         {
                             await App.DataBase.GuardaEstado(registroexitoso.Estado);
                         }
@@ -1400,6 +1637,11 @@ namespace CreeGuanajuatoMovil.ViewModels
                         if (necesidad == null)
                         {
                             await App.DataBase.GuardaNecesidad(registroexitoso.Necesidad);
+                        }
+
+                        if (seccion == null)
+                        {
+                            await App.DataBase.GuardaSeccion(registro.Seccion);
                         }
 
                         await Utilidades.ShowMessage("Notificación", "Su registro fue exitoso", "Aceptar", async () =>
@@ -1461,7 +1703,7 @@ namespace CreeGuanajuatoMovil.ViewModels
                 ErrorMaternoVisible = false;
             }
 
-            if (string.IsNullOrEmpty(registro.INE))
+            if (string.IsNullOrEmpty(strINE))
             {
                 ErrorIneVisible = true;
                 ErrorIneMensaje = "Por favor ingrese INE";
@@ -1469,6 +1711,7 @@ namespace CreeGuanajuatoMovil.ViewModels
             }
             else
             {
+                registro.INE = strINE;
                 ErrorIneVisible = false;
             }
 
@@ -1609,6 +1852,17 @@ namespace CreeGuanajuatoMovil.ViewModels
                 ErrorEstadoCivilVisible = false;
             }
 
+            if (string.IsNullOrEmpty(sSeccion))
+            {
+                ErrorSeccionVisible = true;
+                ErrorSeccionMensaje = "Por favor ingrese su sección";
+                success = false;
+            }
+            else
+            {
+                ErrorSeccionVisible = false;
+            }
+
             return success;
         }
 
@@ -1643,6 +1897,10 @@ namespace CreeGuanajuatoMovil.ViewModels
                 case "Necesidad":
                     IsSelectedNecesidad = false;
                     break;
+
+                case "Seccion":
+                    IsSelectedSeccion = false;
+                    break;
             }
         }
 
@@ -1655,6 +1913,7 @@ namespace CreeGuanajuatoMovil.ViewModels
         {
 
             registro = new Registro();
+            strINE = string.Empty;
             sDireccion = string.Empty;
             DireccionSeleccionado = new Direccion();
             sEscolaridad = string.Empty;
@@ -1663,6 +1922,8 @@ namespace CreeGuanajuatoMovil.ViewModels
             EstadoCivilSeleccionado = new EstadoCivil();
             sNecesidad = string.Empty;
             NecesidadSeleccionado = new Necesidad();
+            sSeccion = string.Empty;
+            SeccionSeleccionado = new Seccion();
             Etapa = 0;
             IsBusy = false;
         }

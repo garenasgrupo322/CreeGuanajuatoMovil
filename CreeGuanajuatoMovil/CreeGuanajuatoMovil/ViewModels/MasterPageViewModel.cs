@@ -1,5 +1,6 @@
 ﻿using CreeGuanajuatoMovil.Helpers;
 using CreeGuanajuatoMovil.Views;
+using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -9,11 +10,23 @@ namespace CreeGuanajuatoMovil.ViewModels
     {
         public string NombreUsuario { get; set; }
         public bool IsUsuarioVisible { get; set; }
+        public ImageSource imageProfiler { get; set; }
 
         public MasterPageViewModel() {
             NombreUsuario = Settings.NameUserLogin;
 
-            if(Settings.AccessTokenType.Contains("Administrador"))
+            if (string.IsNullOrEmpty(Settings.UserImageProfiler))
+            {
+                imageProfiler = ImageSource.FromResource("CreeGuanajuatoMovil.Images.profile.png");
+            }
+            else
+            {
+                var uri = new Uri(Settings.UserImageProfiler);
+                imageProfiler = ImageSource.FromUri(uri);
+            }
+
+
+            if (Settings.AccessTokenType.Contains("Administrador"))
             {
                 IsUsuarioVisible = true;
             }
@@ -40,27 +53,23 @@ namespace CreeGuanajuatoMovil.ViewModels
                     switch (value)
                     {
                         case "1":
-                            Application.Current.MainPage = new MasterDetailPage()
-                            {
-                                Master = new MasterPage() { Title = "Main Page" },
-                                Detail = new NavigationPage(new RegistroPage())
-                            };
+                            navPage.PushAsync(new RegistroPage());
                             break;
 
                         case "2":
-                            Application.Current.MainPage = new MasterDetailPage()
-                            {
-                                Master = new MasterPage() { Title = "Main Page" },
-                                Detail = new NavigationPage(new FiltrosPage())
-                            };
+                            navPage.PushAsync(new FiltrosPage());
                             break;
 
                         case "3":
-                            Application.Current.MainPage = new MasterDetailPage()
-                            {
-                                Master = new MasterPage() { Title = "Main Page" },
-                                Detail = new NavigationPage(new UsuariosPage())
-                            };
+                            navPage.PushAsync(new UsuariosPage());
+                            break;
+
+                        case "4":
+                            navPage.PushAsync(new LegalesPage());
+                            break;
+
+                        case "5":
+                            navPage.PushAsync(new PerfilPage());
                             break;
 
                         case "100":
